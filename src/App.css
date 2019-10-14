@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+
+.navigation-bar {
+  color: #3F51B5;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: "Quicksand";
+  position: fixed;
+  width: 100%;
+}
+
+.major-padding-page {
+  padding-top: 250px;
+  padding-bottom: 250px;
+  color: #3F51B5;
+  font-family: "Quicksand";
+}
+
+.modal-page {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+  color: #3F51B5;
+  font-family: "Quicksand";
+}
+
+.modal-page-purple {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color:#3F51B5; 
+  color: white;
+  font-family: "Quicksand";
+}
+
+.modal-box {
+  background-color: white;
+  color: #3F51B5;
+  padding: 20px;
+}
+
+.closebtndark {
+  color: #3F51B5;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.closebtndark:hover,
+.closebtndark:focus {
+  color: #3F51B5;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-padding {
+  padding-top: 30px;
+}
+
+.text-padding {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.page {
+  padding-top: 100px;
+  padding-bottom: 20px;
+  font-family: "Quicksand";
+  color: #3F51B5;
+}
+
+.navlink {
+  text-decoration: none;
+}
+
+.navlink:hover {
+  text-decoration: none;
+}
+
+.input-bar {
+  width: 100%;
+  padding: 15px;
+  font-size: 20px;
+  border-style: none;
+  border-bottom-style: solid;
+  border-bottom-color: #3F51B5;
+  color: #3F51B5;
+  outline: none;
+}
+
+.input-bar::placeholder {
+  color: #3F51B5;
+}
+
+.input-container {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.input-login-container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.button-purple {
+  background-color: #3F51B5;
+  color: white;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.button-purple:hover {
+  background-color: #5C6BC0;
+}
+
+.button-padding {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.text-white {
+  color: white;
+}
+
+.text-padding-major {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+svg path,
+svg rect{
+  fill: white;
+}
