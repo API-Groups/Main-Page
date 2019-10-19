@@ -46,7 +46,7 @@
 .modal-box {
   background-color: white;
   color: #3F51B5;
-  padding: 20px;
+  padding: 30px;
 }
 
 .closebtndark {
@@ -103,8 +103,8 @@
 }
 
 .input-container {
-  padding-top: 15px;
-  padding-bottom: 15px;
+ padding-top: 15px;
+ padding-bottom: 15px;
 }
 
 .input-login-container {
@@ -140,4 +140,239 @@
 svg path,
 svg rect{
   fill: white;
+}
+
+.dash-navigation {
+  position: fixed;
+  background-color: #5C6BC0;
+  color: white;
+  font-family: 'Quicksand';
+  height: 100vh;
+  padding-top: 20px;
+  width: 220px;
+}
+
+.dash-comp-container {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.dash-comp-container h6:hover {
+  color: #E8EAF6;
+  cursor: pointer;
+}
+
+.non-nav-page {
+  margin-left: 205px;
+  color: #3F51B5;
+  font-family: "Quicksand";
+}
+
+.frontend-page-title {
+  background-color: #E8EAF6;
+  padding: 30px;
+}
+
+.backend-page-title {
+  background-color: #B39DDB;
+  color: white;
+  padding: 30px;
+}
+
+.frontcompliance-page-title {
+  background-color: #9575CD;
+  color: white;
+  padding: 30px;
+}
+
+.page-content {
+  padding: 30px;
+}
+
+.admin-page {
+  padding-top: 20px;
+  padding-bottom: 25px;
+  font-family: 'Quicksand';
+  color: #3F51B5;;
+}
+
+.title-padding {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.text-model {
+  padding-top: 10px;
+  padding-bottom: 10px
+}
+
+.code-model {
+  padding: 20px;
+  background-color: #E8EAF6;
+  color: #3F51B5;
+  text-align: center;
+}
+
+.code-container {
+  color: #3F51B5;
+  background-color: #E8EAF6;
+  width: 100%;
+  padding: 20px;
+}
+
+.tag {
+  background-color: #3F51B5;
+  color: white;
+  border-radius: 5px;
+}
+
+.tag-padding {
+  padding: 5px;
+}
+
+.text-area-input {
+  width: 100%;
+  padding: 15px;
+  font-size: 20px;
+  border-style: none;
+  border-bottom-style: solid;
+  border-bottom-color: #3F51B5;
+  color: #3F51B5;
+  outline: none;
+  height: 100px;
+}
+
+.text-area-input::placeholder {
+  color: #3F51B5;
+}
+
+.render-card {
+  background-color: #3F51B5;
+  color: white;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.card-spacing {
+  padding: 5px;
+}
+
+.render-card:hover{
+  background-color: #5C6BC0;
+}
+
+.project-homepage-title {
+  padding: 30px;
+  color: #3F51B5;
+}
+
+.projects-homepage {
+  padding: 30px;
+}
+
+.project-navigation {
+  position: fixed;
+  padding: 20px;
+  background-color: #E8EAF6;
+  color: #3F51B5;
+  font-family: "Quicksand";
+  height: 100vh;
+  width: 200px;
+}
+
+.project-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+  font-family: "Quicksand";
+  color: white;
+  background-color: #5C6BC0;
+}
+
+.nav-comp-container {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+.api-page {
+  padding: 15px;
+}
+.nav-list-inline li {
+ float: left;
+ padding: 10px;
+ list-style-type: none;
+}
+
+.project-component {
+  padding: 20px;
+}
+
+.project-notes {
+  padding: 20px;
+}
+
+.note-container {
+  padding: 10px;
+}
+
+.project-note {
+  background-color: #1A237E;
+  color: white;
+  padding: 50px;
+  width: 300px;
+  height: 200px;
+}
+
+.project-note:hover {
+  background-color: #3F51B5;
+}
+
+.user-search-container {
+  background-color: #1A237E;
+  color: white;
+  padding: 7px;
+  width: 100%;
+}
+
+.button-white {
+  background-color: white;
+  color: #3F51B5;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.button-white:hover {
+  background-color: #E8EAF6;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.project-users {
+  padding: 15px;
+}
+
+.input-comment {
+  width: 100%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 25px;
+  border-style: solid;
+  border-color: #3F51B5;
+  color: #3F51B5;
+  background-color: transparent;
+}
+
+.input-comment::placeholder {
+  color: #3F51B5;
+}
+
+.columncard {
+  width: 400px;
+  height: 200px;
 }
