@@ -1,6 +1,8 @@
 import React,{useState} from 'react';
 import Navigation from './Subcomponents/Navigation';
 import LoadingWholePage from '../MiscComps/Wholeloading';
+import { JPIAuth } from '../Authentication/Auth';
+import {Redirect} from 'react-router-dom';
 
 const Register = (props) => {
   const [loading, setLoading] = useState({
@@ -21,6 +23,14 @@ const Register = (props) => {
   const [username, setUserName] = useState({
     username: ''
   })
+  const [loggedin, setLoggedIn] = useState({
+    loggedin: false
+  })
+
+  if (loggedin.loggedin) {
+    return <Redirect to="/Dash" />
+  }
+
     return (
         <div>
          <Navigation/>
@@ -74,18 +84,22 @@ const Register = (props) => {
                  firstname: firstname.firstname,
                  lastname: lastname.lastname,
                  email: email.email,
-                 password: password.password,
-                 username: username.username
+                 username: username.username,
+                 password: password.password
                }
 
                fetch('/api/authentication/createuser', {
-                 method: 'PUT',
+                 method: 'POST',
                  headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
                 },
                  body: JSON.stringify(data)
-               }).then(() => {
+               }).then((res) => {
+                return res.json();
+               }).then((body) => {
+                console.log(body);
+
                 setLoading({
                   loading: true
                 })
@@ -93,6 +107,14 @@ const Register = (props) => {
                 setTimeout(() => {
                   setLoading({
                     loading: false
+                  })
+                  JPIAuth.signIn(body.username, body.password)
+                  .then(() => {
+                    setLoggedIn({
+                      loggedin: true
+                    })
+                  }).catch((error) => {
+                    console.log(error)
                   })
                 }, 5000);
                }).catch((error) => {

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const LoadingWholePage = ({loadingprocess}) => {
+const LoadingBluePage = ({loadingprocess}) => {
     if (loadingprocess === true) {
         return (
             <div>
-              <div className="modal-page-purple">
+              <div className="modal-page-blue">
                 <div className="container">
                   <div className="major-padding-page">
                     <div className="row">
@@ -31,7 +31,7 @@ const LoadingWholePage = ({loadingprocess}) => {
                     <div className="row">
                      <div className="col-md-12">
                      <div className="text-padding-major">
-                      <h3 className="text-white text-center">CONSTRUCTING CONSOLE FOR YOU</h3>
+                      <h3 className="text-white text-center">LOADING PROJECT CONSOLE</h3>
                      </div>
                      </div>
                     </div>
@@ -45,4 +45,4 @@ const LoadingWholePage = ({loadingprocess}) => {
     }
 }
 
-export default LoadingWholePage;
+export default LoadingBluePage;

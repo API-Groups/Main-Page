@@ -129,6 +129,8 @@ const Search = ({
           </div>
           )
         }
+      } else {
+        console.log("You have more than one search for comp")
       }
     }
 

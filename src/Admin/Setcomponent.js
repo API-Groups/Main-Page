@@ -136,6 +136,8 @@ const SetComponent = () => {
                                 'Content-Type': 'application/json'
                             }, 
                             body: JSON.stringify(data)
+                        }).then(() => {
+                            console.log('this worked')
                         }).catch((error) => {
                             console.log(error);
                         })

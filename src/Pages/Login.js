@@ -1,13 +1,24 @@
 import React, {useState} from 'react';
 import Navigation from './Subcomponents/Navigation';
-
+import {JPIAuth} from '../Authentication/Auth';
+import {Redirect} from 'react-router-dom';
 const Login = () => {
-  const [email, setEmail] = useState({
-    email: ''
+  const [username, setUserName] = useState({
+    username: ''
   })
   const [password, setPassword] = useState({
     password: ''
   })
+  const [loggedIn, setLogin] = useState({
+    loggedin: false
+  })
+
+  let {loggedin} = loggedIn
+  if(loggedin) {
+    return <Redirect to="/Dash" />
+  }
+
+ 
     return (
         <div>
          <Navigation/>
@@ -16,9 +27,9 @@ const Login = () => {
             <h1>LOGIN</h1>
             <div className="input-login-container">
             <div className="input-container">
-             <input type="text" className="input-bar" placeholder="email" onChange={(e) => {
-               setEmail({
-                 email: e.target.value
+             <input type="text" className="input-bar" placeholder="user name" onChange={(e) => {
+               setUserName({
+                 username: e.target.value
                })
              }}/>
             </div>
@@ -31,11 +42,14 @@ const Login = () => {
             </div>
             </div>
             <button className="button-purple" onClick={() => {
-              const data = {
-                email: email.email,
-                password: password.password
-              }
-              console.log(data);
+              JPIAuth.signIn(username.username , password.password)
+              .then(() => {
+                setLogin({
+                  loggedin: true
+                })
+              }).catch((error) => {
+                console.log(error);
+              })
             }}>LOGIN</button>
           </div>
          </div>

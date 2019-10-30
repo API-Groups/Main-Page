@@ -1,5 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useRef} from 'react';
 import Search from '../Functions/Search'
+import {JPIAuth} from '../Authentication/Auth';
+import LoadingPage from '../Functions/Loadingpage';
+import {NavLink} from 'react-router-dom';
 
 const FrontCompliance = ({frontcompliance}) => {
     if (frontcompliance === true) {
@@ -37,7 +40,7 @@ const BackEndPage = ({backendpage}) => {
     }
 }
 
-const FrontEndPage = ({frontendpage}, props) => {
+const FrontEndPage = ({frontendpage}) => {
     const [searchOptions, setSearchOptions] = useState({
         searchOptions: []
     })
@@ -47,18 +50,29 @@ const FrontEndPage = ({frontendpage}, props) => {
     const [modalComponent, setModalComponent] = useState({
         modalComponent: false
     })
+
+    const componentDidMount = useRef(false);
+    
     useEffect(() => {
-      fetch('/api/frontend/searchcomponents')
-      .then((res => {
-          return res.json();
-      })).then((body) => {
-         setSearchOptions({
-             searchOptions: body
-         })
-      }).catch((error) => {
-          console.log(error);
-      })
-    }, [])
+    componentDidMount.current = true;
+    if (frontendpage === true) {
+        if (componentDidMount.current) {
+            fetch('/api/frontend/getcomponents')
+            .then((res) => {
+                return res.json();
+            }).then((body) => {
+                setSearchOptions({
+                    searchOptions: body
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+        }
+    }
+
+    return () => {componentDidMount.current = false}
+    }, [currentComponent.currentComponent , frontendpage])
+    
 
     const ModalCurrentComponent = ({modalcomponent}) => {
         if (modalcomponent === true) {
@@ -73,11 +87,11 @@ const FrontEndPage = ({frontendpage}, props) => {
                                   modalComponent: false
                               })
                           }}>&times;</span>
-                          <h4>{currentComponent.currentComponent.name}</h4>
+                          <h4>{currentComponent.currentComponent.componentname}</h4>
                           <div className="row">
                           {
-                              currentComponent.currentComponent.tags.map((item) => (
-                                 <div key={currentComponent.currentComponent.tags.indexOf(item)}>
+                              currentComponent.currentComponent.componenttags.map((item) => (
+                                 <div key={currentComponent.currentComponent.componenttags.indexOf(item)}>
                                     <div className="tag-padding">
                                         <h6 className="tag d-inline-flex p-2">{item}</h6>
                                     </div>
@@ -97,8 +111,8 @@ const FrontEndPage = ({frontendpage}, props) => {
                           </div>
                           <div className="text-padding">
                             {
-                                currentComponent.currentComponent.installation.map((item) => (
-                                    <div key={currentComponent.currentComponent.installation.indexOf(item)}>
+                                currentComponent.currentComponent.install.map((item) => (
+                                    <div key={currentComponent.currentComponent.install.indexOf(item)}>
                                        <div className={item.className}>
                                          <h5>{item.text}</h5>
                                        </div> 
@@ -130,7 +144,7 @@ const FrontEndPage = ({frontendpage}, props) => {
                   <Search
                   inputstyle="input-bar"
                   renderstyle="render-card"
-                  output={["name" , "description"]}
+                  output={["componentname" , "description"]}
                   variable={searchOptions.searchOptions}
                   placeholder="Search for a React Component"
                   longRender={true}
@@ -157,6 +171,71 @@ const Projects = ({projectcomponent}) => {
     const [createmodal, setCreateModal] = useState({
         createmodal: false
     })
+    const [projects, setProjects] = useState({
+        projects: []
+    })
+
+    const componentDidMount = useRef(false);
+    
+    useEffect(() => {
+     componentDidMount.current = true;
+     if (projectcomponent === true) {
+       setTimeout(() => {
+        if (componentDidMount.current) {
+            if (JPIAuth.currentUser.userid !== undefined) {
+            fetch('/api/dash/getprojects/' + JPIAuth.currentUser.userid)
+            .then((res) => {
+                return res.json();
+            }).then((body) => {
+                console.log(body);
+                setProjects({
+                    projects: body
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+          }
+       }
+       }, 500);
+     }
+     return () => {
+         componentDidMount.current = false
+        }
+    }, [projectcomponent])
+
+
+    const ProjectCards = () => {
+        if (projects.projects !== 0) {
+            return (
+                <div>
+                 <div className="row">
+                 {
+                     projects.projects.map((item) => (
+                        <div key={projects.projects.indexOf(item)}>
+                         <div className="card-spacing">
+                          <NavLink className="nav-card" to={"/project/" + item.projectapi}>
+                          <div className="project-card">
+                           <h4 className="text-center">{item.projectname}</h4>
+                          </div>
+                          </NavLink>
+                         </div>
+                        </div>
+                     ))
+                 }
+                 </div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                 <div className="title-padding">
+                  <h2 className="text-center">YOU ARE NOT APART OF ANY GROUPS</h2>
+                 </div>
+                </div>
+            )
+        }
+    }
+
 
     const CreatModal = ({createmodal}) => {
         const [users, setGetUsers] = useState({
@@ -168,22 +247,33 @@ const Projects = ({projectcomponent}) => {
         const [projectdescription, setProjectDescription] = useState({
             projectdescription: ''
         })
-        const [usersadded, setUsersAdded] = useState({
-            usersadded: []
+        const [requestedusers, setRequestedUsers] = useState({
+            requestedusers: []
         })
-
+       
+        const subComponentDidMount = useRef(null);
         useEffect(() => {
-            fetch("/api/project/getusers")
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
-                setGetUsers({
-                    users: body
+        subComponentDidMount.current = true;
+        if (createmodal === true) {
+            if (subComponentDidMount.current) {
+                setTimeout(() => {
+                fetch('/api/dash/getusers')
+                .then((res) => {
+                    return res.json();
+                }).then((body) => {
+                    setGetUsers({
+                      users: body
+                    })
+                }).catch((error) => {
+                    console.log(error)
                 })
-            }).catch((error) => {
-                console.log(error);
-            })
-        } , [])
+                }, 500);
+            }
+        }
+
+        return () => {subComponentDidMount.current = false}
+        } , [createmodal])
+       
         if (createmodal === true) {
             return (
                 <div>
@@ -214,14 +304,14 @@ const Projects = ({projectcomponent}) => {
                       <Search
                       inputstyle="input-bar"
                       renderstyle="user-search-container"
-                      output={["username" , "fullname"]}
+                      output={["username" , "fullname", "firstname"]}
                       variable={users.users}
                       placeholder="People you want to add"
                       longRender={true}
                       callback={(item) => {
-                         usersadded.usersadded.push(item.useruid)
-                        setUsersAdded({
-                            usersadded: usersadded.usersadded
+                        requestedusers.requestedusers.push(item.userid)
+                        setRequestedUsers({
+                            requestedusers: requestedusers.requestedusers
                         })
                       }}
                       />
@@ -230,11 +320,30 @@ const Projects = ({projectcomponent}) => {
                             const data = {
                                 projectname: projectname.projectname,
                                 projectdescription: projectdescription.projectdescription,
-                                usersadded: usersadded.usersadded
+                                requestedusers: requestedusers.requestedusers,
                             }
 
-                            console.log(data)
-                            console.log(usersadded.usersadded)
+                            fetch('/api/dash/createproject/' + JPIAuth.currentUser.userid, {
+                                method: 'POST',
+                                headers: {
+                                    'Accept': 'application/json',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                            }).then((res) => {
+                                return res.json();
+                            }).then((body) => {
+                                console.log(body);
+                                projects.projects.push(body);
+                                setProjects({
+                                    projects: projects.projects
+                                })
+                                setCreateModal({
+                                    createmodal: false
+                                })
+                            }).catch((error) => {
+                                console.log(error);
+                            })
                         }} >CREATE PROJECT</button>
                       </div>
                      </div>
@@ -259,6 +368,9 @@ const Projects = ({projectcomponent}) => {
                           createmodal: true
                       })
                   }}>CREATE PROJECT</button>
+                  <div className="button-padding">
+                  <button className="button-white">PENDING PROJECTS</button>
+                  </div>
                  </div>
                  <h4>PROJECTS</h4>
              </div>
@@ -267,6 +379,7 @@ const Projects = ({projectcomponent}) => {
                 <div className="title-padding">
                  <h3>YOUR PROJECTS</h3>
                 </div>
+                <ProjectCards/>
               </div>
              </div>
              <CreatModal createmodal={createmodal.createmodal} />
@@ -290,82 +403,125 @@ const Dash = () => {
     const [project, setProjects] = useState({
         project: true 
     })
+    const [dashpage, setDashPage] = useState({
+        dashpage: false
+    })
+    const [loading, setLoadingPage] = useState({
+        loading: false
+    })
+
+
+    useEffect(() => {
+        setLoadingPage({
+            loading: true
+        })
+        setTimeout(() => {
+            setLoadingPage({
+                loading: false
+            })
+            setDashPage({
+                dashpage: true
+            })
+        }, 1000);
+    } , [])
+
+
+    const DashPage = ({dashpage}) => {
+     if (dashpage === true) {
+        return (
+            <div>
+              <div className="dash-navbar">
+               <div className="float-right">
+                <button className="button-white" onClick={() => {
+                    JPIAuth.logout();
+                }}>LOGOUT</button>
+               </div>
+               <h5>{JPIAuth.currentUser.username}</h5>
+              </div>
+              <div className="dash-navigation">
+                <div className="container">
+                 <div className="dash-comp-container">
+                  <h6 onClick={() => {
+                      setProjects({
+                          project: true
+                      })
+                      setFrontEnd({
+                          frontend: false
+                      })
+                      setBackEnd({
+                          backend: false
+                      })
+                      setFrontCompliance({
+                          frontcompliance: false
+                      })
+                  }}>PROJECTS</h6>
+                 </div>
+                 <div className="dash-comp-container">
+                  <h6 onClick={() => {
+                      setProjects({
+                        project: false
+                    })
+                      setFrontEnd({
+                          frontend: true
+                      })
+                      setBackEnd({
+                          backend: false
+                      })
+                      setFrontCompliance({
+                          frontcompliance: false
+                      })
+                  }}>FRONT END</h6>
+                 </div>
+                 <div className="dash-comp-container">
+                  <h6 onClick={() => {
+                      setProjects({
+                        project: false
+                    })
+                    setFrontEnd({
+                        frontend: false
+                    })
+                    setBackEnd({
+                        backend: true
+                    })
+                    setFrontCompliance({
+                        frontcompliance: false
+                    })
+                  }}>BACK END</h6>
+                 </div>
+                 <div className="dash-comp-container">
+                  <h6 onClick={() => {
+                      setProjects({
+                        project: false
+                    })
+                      setFrontEnd({
+                        frontend: false
+                    })
+                    setBackEnd({
+                        backend: false
+                    })
+                    setFrontCompliance({
+                        frontcompliance: true
+                    })
+                  }}>FRONT COMPLIANCE</h6>
+                 </div>
+                </div>
+              </div>
+              <FrontEndPage frontendpage={frontend.frontend} />
+              <BackEndPage backendpage={backend.backend} />
+              <FrontCompliance frontcompliance={frontcompliance.frontcompliance} />
+              <Projects projectcomponent={project.project} />
+            </div>
+        )
+     } else {
+         return null;
+     }
+    }
+
 
     return (
         <div>
-          <div className="dash-navigation">
-            <div className="container">
-             <h3 className="text-center">JAFFER</h3>
-             <div className="dash-comp-container">
-              <h6 onClick={() => {
-                  setProjects({
-                      project: true
-                  })
-                  setFrontEnd({
-                      frontend: false
-                  })
-                  setBackEnd({
-                      backend: false
-                  })
-                  setFrontCompliance({
-                      frontcompliance: false
-                  })
-              }}>PROJECTS</h6>
-             </div>
-             <div className="dash-comp-container">
-              <h6 onClick={() => {
-                  setProjects({
-                    project: false
-                })
-                  setFrontEnd({
-                      frontend: true
-                  })
-                  setBackEnd({
-                      backend: false
-                  })
-                  setFrontCompliance({
-                      frontcompliance: false
-                  })
-              }}>FRONT END</h6>
-             </div>
-             <div className="dash-comp-container">
-              <h6 onClick={() => {
-                  setProjects({
-                    project: false
-                })
-                setFrontEnd({
-                    frontend: false
-                })
-                setBackEnd({
-                    backend: true
-                })
-                setFrontCompliance({
-                    frontcompliance: false
-                })
-              }}>BACK END</h6>
-             </div>
-             <div className="dash-comp-container">
-              <h6 onClick={() => {
-                  setProjects({
-                    project: false
-                })
-                  setFrontEnd({
-                    frontend: false
-                })
-                setBackEnd({
-                    backend: false
-                })
-                setFrontCompliance({
-                    frontcompliance: true
-                })
-              }}>FRONT COMPLIANCE</h6>
-             </div>
-            </div>
-          </div>
-          <FrontEndPage frontendpage={frontend.frontend} />
-          <BackEndPage backendpage={backend.backend} />
-          <FrontCompliance frontcompliance={frontcompliance.frontcompliance} />
-          <Projects projectcomponent={project.project} />
+         <DashPage dashpage={dashpage.dashpage} />
+         <LoadingPage loadingpage={loading.loading} />
         </div>
     )
 }

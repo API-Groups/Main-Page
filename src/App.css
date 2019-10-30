@@ -43,6 +43,32 @@
   font-family: "Quicksand";
 }
 
+.modal-page-blue {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color:#3D5AFE; 
+  color: white;
+  font-family: "Quicksand";
+}
+
+.modal-page-white {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color:white; 
+  color: #3F51B5;
+  font-family: "Quicksand";
+}
+
 .modal-box {
   background-color: white;
   color: #3F51B5;
@@ -142,9 +168,19 @@ svg rect{
   fill: white;
 }
 
+.dash-navbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+  font-family: 'Quicksand';
+  background-color: #1A237E;
+  color: white;
+}
+
 .dash-navigation {
   position: fixed;
-  background-color: #5C6BC0;
+  background-color: #283593;
   color: white;
   font-family: 'Quicksand';
   height: 100vh;
@@ -375,4 +411,54 @@ svg rect{
 .columncard {
   width: 400px;
   height: 200px;
+}
+
+.loadingblue {
+  border: 16px solid white;
+  border-radius: 50%;
+  border-top: 16px solid #0D47A1;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite; 
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg) }
+}
+
+.project-card {
+  padding: 40px;
+  background-color: #3F51B5;
+  color: white;
+  border-radius: 10px;
+}
+
+.project-card:hover {
+  background-color: #8C9EFF;
+}
+
+.nav-card {
+  text-decoration: none;
+}
+
+.nav-card:hover {
+  text-decoration: none;
+}
+
+.comment-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.comment {
+  background-color: #3D5AFE;
+  color: white;
+  border-radius: 8px;
 }

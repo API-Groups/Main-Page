@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import MinimizeText from '../../Functions/MinimizeText';
+import { JPIAuth } from '../../Authentication/Auth';
 
-const ProjectNotes = ({projectNotes}) => {
+const ProjectNotes = ({projectNotes, api}) => {
     const [notemodal, setNoteModal] = useState({
         notemodal: false
     })
@@ -16,8 +17,55 @@ const ProjectNotes = ({projectNotes}) => {
         currentModalNote: false
     })
 
+    const componentMounted = useRef(null);
+    useEffect(() => {
+     componentMounted.current = true;
+     if (componentMounted.current) {
+         if (projectNotes === true) {
+             fetch('/api/project/getprojectnotes/' + api)
+             .then((res) => {
+                 return res.json();
+             }).then((body) => {
+                 console.log(body);
+                 setNoteResponse({
+                     noteres: body
+                 })
+             }).catch((error) => {
+                 console.log(error);
+             })
+         }
+     }
+    }, [api, projectNotes])
+
     const CurrentModalNote = ({currentnote , item}) => {
+        const [currentcomments , setCurrentComments] = useState({
+            currentcomments: []
+        })
+
+        useEffect(() => {
+         setCurrentComments({
+             currentcomments: item.comments
+         })
+        }, [item.comments])
+
+        const Comments = () => {
+            return (
+                <div>
+                    {
+                        currentcomments.currentcomments.map((index) => (
+                            <div key={currentcomments.currentcomments.indexOf(index)}>
+                                 <div className="comment-container">
+                                  <h6 className="comment d-inline-flex p-2">{index.username + ': ' + index.message}</h6>
+                                 </div>
+                                </div>
+                        ))
+                    }
+                </div>
+            )
+        }
+
         if (currentnote === true) {
+            console.log(item.noteid)
             return (
                 <div>
                  <div className="modal-page">
@@ -38,10 +86,36 @@ const ProjectNotes = ({projectNotes}) => {
                         </div>
                        </div>
                        <div className="col-md-4">
-                        <h6>{item.message}</h6>
+                        <h6>{item.note}</h6>
                         <div className="input-container">
-                         <input type="text" className="input-comment" placeholder="Comment here" />
+                         <input type="text" className="input-comment" placeholder="Comment here" onKeyDown={(e) => {
+                            if(e.keyCode === 13) {
+                                const data = {
+                                    username: JPIAuth.currentUser.username,
+                                    message: e.target.value
+                                }
+
+                                fetch('/api/project/commentonnotes/' + api + '/' + item.noteid, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    }, 
+                                    body: JSON.stringify(data)
+                                }).then((res) => {
+                                    return res.json()
+                                }).then((body) => {
+                                    currentcomments.currentcomments.push(body);
+                                    setCurrentComments({
+                                        currentcomments: currentcomments.currentcomments
+                                    })
+                                }).catch((error) => {
+                                    console.log(error);
+                                })
+                            }
+                         }} />
                         </div>
+                        <Comments/>
                        </div>
                       </div>
                     </div>
@@ -74,9 +148,9 @@ const ProjectNotes = ({projectNotes}) => {
                                 <div className="float-right">
                                 <h6>{item.displaydate}</h6>
                                 </div>
-                                <h6>{item.displayname}</h6>
+                                <h6>{item.creator}</h6>
                                 <div className="text-padding">
-                                <h5>{MinimizeText(item.message , 20)}</h5>
+                                <h5>{MinimizeText(item.note , 20)}</h5>
                                 </div>
                             </div>
                             </div>
@@ -130,15 +204,28 @@ const ProjectNotes = ({projectNotes}) => {
                           <div className="button-padding">
                             <button className="button-purple" onClick={() =>{
                                 const data = {
-                                    displayname: 'Jaffer',
+                                    creator: JPIAuth.currentUser.username,
                                     displaydate: '10-19-2019',
-                                    message: noteinput.noteinput,
-                                    code: notecode.notecode
+                                    note: noteinput.noteinput,
+                                    model: notecode.notecode
                                 }
 
-                                noteres.noteres.push(data);
-                                setNoteResponse({
-                                    noteres: noteres.noteres
+                                fetch('/api/project/createnote/' + api, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Accept': 'application/json',
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(data)
+                                }).then((res) => {
+                                    return res.json();
+                                }).then((body) => {
+                                    noteres.noteres.push(body);
+                                    setNoteResponse({
+                                        noteres: noteres.noteres
+                                    })
+                                }).catch((error) => {
+                                    console.log(error);
                                 })
                                 
                             }}>SUBMIT NOTE</button>

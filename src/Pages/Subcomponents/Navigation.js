@@ -54,6 +54,7 @@ const Navigation = () => {
              </div>
             </div>
             <div className="col-md-4">
+              <div className="float-right">
               <div className="row">
                 <div className="col-md-6">
                 <NavLink to="/Login" className="navlink"><h6 className="text-center">LOGIN</h6></NavLink>
@@ -61,6 +62,7 @@ const Navigation = () => {
                 <div className="col-md-6">
                 <NavLink to="/Register" className="navlink"><h6 className="text-center">REGISTER</h6></NavLink>
                 </div>  
+              </div>
               </div>
             </div>
            </div>

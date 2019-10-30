@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState , useEffect} from 'react';
 import Search from '../../Functions/Search';
 
 const ApiPage = ({apipage}) => {
@@ -24,46 +24,40 @@ const ApiPage = ({apipage}) => {
         frontcompliance: []
     })
     const[currentJSON, setCurrentJSON] = useState({
-        currentJSON: frontend.frontend
+        currentJSON: []
     })
 
-    useEffect(() => {
-     fetch('/api/project/getfrontend')
-     .then((res) => {
-         return res.json();
-     }).then((body) => {
+     useEffect(() => {
+        fetch('/api/backend/getbackendcomps')
+        .then((res) => {
+            return res.json();
+        }).then((body) => {
+           setBackEnd({
+               backend: body
+           })
+        }).catch((error) => {
+            console.log(error)
+        })
+
         setFrontEnd({
-            frontend: body
+            frontend: []
         })
-     }).catch((error) => {
-         console.log(error)
-     })
+   
+        fetch('/api/frontcompliance/getfrontcompliance')
+        .then((res) => {
+            return res.json();
+        }).then((body) => {
+           setFrontCompliance({
+               frontcompliance: body
+           })
+        }).catch((error) => {
+            console.log(error)
+        })
+     }, [])
+    
 
-     fetch('/api/project/getbackend')
-     .then((res) => {
-         return res.json();
-     }).then((body) => {
-        setBackEnd({
-            backend: body
-        })
-     }).catch((error) => {
-         console.log(error)
-     })
 
-     fetch('/api/project/getfrontcompliance')
-     .then((res) => {
-         return res.json();
-     }).then((body) => {
-        setFrontCompliance({
-            frontcompliance: body
-        })
-     }).catch((error) => {
-         console.log(error)
-     })
-     
-     
-    }, [])
- 
+
     const ServiceApi = ({serviceapi}) => {
      if (serviceapi === true) {
          return (
@@ -71,6 +65,7 @@ const ApiPage = ({apipage}) => {
                 <div className="project-component">
                     <div className="container">
                       <h4>Service Credentials</h4>
+                      <h6>Add Key Credentials to your code to use our backend API's for effective and productive backend code.</h6>
                     </div>
                 </div> 
              </div>
@@ -79,6 +74,8 @@ const ApiPage = ({apipage}) => {
          return null;
      }
     }
+
+    console.log(currentJSON.currentJSON)
  
     const FindAPI = ({findapi}) => {
         if (findapi === true) {
@@ -93,11 +90,40 @@ const ApiPage = ({apipage}) => {
                         inputstyle="input-bar"
                         output={["name", "description"]}
                         renderstyle="render-card"
+                        variable={currentJSON.currentJSON}
+                        placeholder="Search for Components"
+                        callback={(item) => {
+                            console.log(item)
+                        }}
                         />
                       </div>
                       <div className="col-md-4">
                         <div className="input-container">
-                        <select className="input-bar">
+                        <select className="input-bar" onChange={(e) => {
+
+                            console.log(e.target.value)
+
+                        
+                            setCurrentComponent({
+                                currentComponent: e.target.value
+                            })
+
+                            if (currentComponent.currentComponent === "FRONTEND") {
+                              setCurrentJSON({
+                                  currentJSON: frontend.frontend
+                              })
+                            } else if (currentComponent.currentComponent === "BACKEND") {
+                                setCurrentJSON({
+                                    currentJSON: backend.backend
+                                })
+                            } else if (currentComponent.currentComponent === "FRONTCOMPLIANCE") {
+                                setCurrentJSON({
+                                    currentJSON: frontcompliance.frontcompliance
+                                })
+                            }
+                            
+
+                        }}>
                          <option value="FRONTEND">Front End</option>
                          <option value="BACKEND">Back End</option>
                          <option value="FRONTCOMPLIANCE">Front Compliance</option>
