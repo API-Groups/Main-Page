@@ -1,7 +1,7 @@
 import React, {useState , useEffect} from 'react';
 import Search from '../../Functions/Search';
 
-const ApiPage = ({apipage}) => {
+const ApiPage = ({apipage , api}) => {
     const [projectapi , setProjectApi] = useState({
         projectapi: true
     })
@@ -65,7 +65,47 @@ const ApiPage = ({apipage}) => {
                 <div className="project-component">
                     <div className="container">
                       <h4>Service Credentials</h4>
-                      <h6>Add Key Credentials to your code to use our backend API's for effective and productive backend code.</h6>
+                      <h6>Add Key Credentials to your code to use our backend API's and Frontcompliance components for effective and productive code.</h6>
+                      <div className="text-padding">
+                        <div className="service-box">
+                        <h4>SERVICE CREDENTIALS</h4>
+                         <div className="row">
+                          <div className="col-md-6">
+                            <h6>JPI Service Credentials is the key to using the backend and the Front compliance components where you can monitor specific data that we display for you so that you can modify and update your application to its most promising potential. Please be advised that this key is very IMPORTANT and make sure that this is not public information because of the fact that this can affect your data immensley. In the case that we find any abnormalities or insecurities we will notify you immediately.</h6>
+                          </div>
+                          <div className="col-md-6">
+                            <div className="button-major-padding">
+                             <div className="d-flex justify-content-center">
+                             <button className="button-white" onClick={() => {
+                                 fetch('/api/project/getservicecredentials/' + api)
+                                 .then((res) => {
+                                     return res.blob();
+                                 }).then((body) => {
+                                     fetch('/api/project/getservicetitle/' + api)
+                                     .then((res) => {
+                                         return res.text();
+                                     }).then((title) => {
+                                        const blobUrl = URL.createObjectURL(body);
+                                        const dl = document.createElement('a');
+                                        dl.href = blobUrl;
+                                        dl.download = title;
+                                        dl.style.display = `none`;
+                                        document.body.appendChild(dl);
+                                        dl.click();
+                                        document.body.removeChild(dl);  
+                                     }).catch((error) => {
+                                         console.log(error);
+                                     })       
+                                 }).catch((error) => {
+                                     console.log(error);
+                                 })
+                             }}>GET CREDENTIALS</button>
+                             </div>
+                            </div>
+                          </div>
+                         </div>
+                        </div>
+                      </div>
                     </div>
                 </div> 
              </div>
@@ -74,8 +114,6 @@ const ApiPage = ({apipage}) => {
          return null;
      }
     }
-
-    console.log(currentJSON.currentJSON)
  
     const FindAPI = ({findapi}) => {
         if (findapi === true) {

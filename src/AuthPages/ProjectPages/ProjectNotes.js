@@ -41,7 +41,12 @@ const ProjectNotes = ({projectNotes, api}) => {
         const [currentcomments , setCurrentComments] = useState({
             currentcomments: []
         })
-
+        const [originalCodeContainer, setOGCodeContainer] = useState({
+            originalCodeContainer: true
+        })
+        const [codeEditor, setCodeEditor] = useState({
+            codeEditor: false
+        })
         useEffect(() => {
          setCurrentComments({
              currentcomments: item.comments
@@ -64,8 +69,35 @@ const ProjectNotes = ({projectNotes, api}) => {
             )
         }
 
+        const CodeEditorInput = ({codeEditorInput}) => {
+            if (codeEditorInput === true) {
+                return (
+                    <div className="code-container">
+                     <textarea className="code-editor" />
+                    </div>
+                )
+            } else {
+                return null;
+            }
+        }
+
+        const CodeContainer = ({codecontainer}) => {
+            if (codecontainer === true) {
+              return (
+                  <div>
+                    <div className="code-container">
+                     <pre>
+                        {item.model}
+                     </pre>
+                    </div>
+                  </div>
+              )
+            } else {
+                return null;
+            }
+        }
+
         if (currentnote === true) {
-            console.log(item.noteid)
             return (
                 <div>
                  <div className="modal-page">
@@ -77,13 +109,32 @@ const ProjectNotes = ({projectNotes, api}) => {
                               currentModalNote: false
                           })
                       }}>&times;</span>
+                      <div className="button-padding">
+                      <button className="button-purple" onClick={() =>{
+                          setOGCodeContainer({
+                              originalCodeContainer: false
+                          })
+                          setCodeEditor({
+                              codeEditor: true
+                          })
+                      }}>
+                       EDIT CODE
+                      </button>
+                      <button className="button-white" onClick={() =>{
+                          setOGCodeContainer({
+                              originalCodeContainer: true
+                          })
+                          setCodeEditor({
+                              codeEditor: false
+                          })
+                      }}>
+                       ORIGINAL CODE
+                      </button>
+                      </div>
                       <div className="row">
                        <div className="col-md-8">
-                        <div className="code-container">
-                         <pre>
-                             {item.code}
-                         </pre>
-                        </div>
+                        <CodeContainer codecontainer={originalCodeContainer.originalCodeContainer}/>
+                        <CodeEditorInput codeEditorInput={codeEditor.codeEditor}/>
                        </div>
                        <div className="col-md-4">
                         <h6>{item.note}</h6>
@@ -150,7 +201,7 @@ const ProjectNotes = ({projectNotes, api}) => {
                                 </div>
                                 <h6>{item.creator}</h6>
                                 <div className="text-padding">
-                                <h5>{MinimizeText(item.note , 20)}</h5>
+                                <h5 className="text-center">{MinimizeText(item.note , 20)}</h5>
                                 </div>
                             </div>
                             </div>
@@ -223,6 +274,9 @@ const ProjectNotes = ({projectNotes, api}) => {
                                     noteres.noteres.push(body);
                                     setNoteResponse({
                                         noteres: noteres.noteres
+                                    })
+                                    setNoteModal({
+                                        notemodal: false
                                     })
                                 }).catch((error) => {
                                     console.log(error);

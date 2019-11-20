@@ -19,8 +19,11 @@ const SetComponent = () => {
     const [installation, setInstallation] = useState({
         installation: []
     })
+    const [subcomponent, setSubComponent] = useState({
+        subcomponent: "EMPTY"
+    })
     const [componenttype, setComponentType] = useState({
-        componenttype: 'FRONTEND'
+        componenttype: "FRONTEND"
     })
 
     const ShowInstallTitle = () => {
@@ -28,6 +31,56 @@ const SetComponent = () => {
             return (
                 <div>
                     <h4>INSTALL</h4>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
+    const TypeFrontEnd = () => {
+        if (componenttype.componenttype === "FRONTEND") {
+          return (
+              <div>
+                  <select className="input-bar" onChange={(e) => {
+                      setSubComponent({
+                          subcomponent: e.target.value
+                      })
+                  }}> 
+                      <option value="EMPTY">Pick a languange</option>
+                      <option value="REACT">React Component</option>
+                      <option value="VANILLAJS">Vanilla Javascript</option>
+                  </select>
+              </div>
+          )
+        } else if (componenttype.componenttype === "BACKEND") {
+            return (
+                <div>
+                <select className="input-bar" onChange={(e) => {
+                      setSubComponent({
+                          subcomponent: e.target.value
+                      })
+                  }}>
+                    <option value="EMPTY">Pick a languange</option>
+                    <option value="NODEJS">Node.js</option>
+                    <option value="PYTHON">Python</option>
+                    <option value="JAVA">Java</option>
+                    <option value="GO">Go</option>
+                    <option value="SWIFT">Swift</option>
+                </select>
+                </div>
+            )
+        } else if (componenttype.componenttype === "FRONTCOMPLIANCE") {
+            return (
+                <div>
+                 <select className="input-bar" onChange={(e) => {
+                      setSubComponent({
+                          subcomponent: e.target.value
+                      })
+                  }}>
+                     <option value="EMPTY">Pick a languange</option>
+                     <option value="REACTJS">React JS</option>
+                 </select>
                 </div>
             )
         } else {
@@ -55,11 +108,17 @@ const SetComponent = () => {
                         setComponentType({
                             componenttype: e.target.value
                         })
+                        setSubComponent({
+                            subcomponent: ""
+                        })
                     }}>
                  <option value="FRONTEND">FRONT END</option>
                  <option value="BACKEND">BACK END</option>
                  <option value="FRONTCOMPLIANCE">FRONT COMPLIANCE</option>
                 </select>
+                </div>
+                <div className="input-container">
+                 <TypeFrontEnd/>
                 </div>
                 <div className="input-container">
                     <textarea type="text" className="input-bar" placeholder="Component Description" onChange={(e) => {
@@ -126,9 +185,13 @@ const SetComponent = () => {
                             componenttags: componentTags.componentTags,
                             description: componentDescription.componentDescription,
                             model: model.model,
-                            install: installation.installation
+                            install: installation.installation,
+                            subcomponent: subcomponent.subcomponent
                         }
+                        
+                        console.log(data);
 
+                        
                         fetch('/adminapi/setcomponent' , {
                             method: 'PUT',
                             headers: {
@@ -141,6 +204,7 @@ const SetComponent = () => {
                         }).catch((error) => {
                             console.log(error);
                         })
+                        
                     }}>SUBMIT COMPONENT</button>
                  </div>
                 </div>

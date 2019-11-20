@@ -3,6 +3,7 @@ import Navigation from './Subcomponents/Navigation';
 import LoadingWholePage from '../MiscComps/Wholeloading';
 import { JPIAuth } from '../Authentication/Auth';
 import {Redirect} from 'react-router-dom';
+//import JPID from '../Test/testdata';
 
 const Register = (props) => {
   const [loading, setLoading] = useState({
@@ -103,6 +104,7 @@ const Register = (props) => {
                 setLoading({
                   loading: true
                 })
+                
 
                 setTimeout(() => {
                   setLoading({

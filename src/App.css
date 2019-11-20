@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Quicksand");
 
 .navigation-bar {
-  color: #3F51B5;
+  color: #304FFE;
   padding-top: 10px;
   padding-bottom: 10px;
   font-family: "Quicksand";
@@ -12,7 +12,7 @@
 .major-padding-page {
   padding-top: 250px;
   padding-bottom: 250px;
-  color: #3F51B5;
+  color: #304FFE;
   font-family: "Quicksand";
 }
 
@@ -26,7 +26,7 @@
   overflow: auto; 
   background-color: rgb(0,0,0); 
   background-color: rgba(0,0,0,0.4); 
-  color: #3F51B5;
+  color: #304FFE;
   font-family: "Quicksand";
 }
 
@@ -38,7 +38,7 @@
   width: 100%;
   height: 100%; 
   overflow: auto; 
-  background-color:#3F51B5; 
+  background-color:#304FFE; 
   color: white;
   font-family: "Quicksand";
 }
@@ -65,18 +65,18 @@
   height: 100%; 
   overflow: auto; 
   background-color:white; 
-  color: #3F51B5;
+  color: #304FFE;
   font-family: "Quicksand";
 }
 
 .modal-box {
   background-color: white;
-  color: #3F51B5;
-  padding: 30px;
+  color: #304FFE;
+  padding: 50px;
 }
 
 .closebtndark {
-  color: #3F51B5;
+  color: #304FFE;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -84,7 +84,7 @@
 
 .closebtndark:hover,
 .closebtndark:focus {
-  color: #3F51B5;
+  color: #304FFE;
   text-decoration: none;
   cursor: pointer;
 }
@@ -102,7 +102,7 @@
   padding-top: 100px;
   padding-bottom: 20px;
   font-family: "Quicksand";
-  color: #3F51B5;
+  color: #304FFE;
 }
 
 .navlink {
@@ -119,13 +119,13 @@
   font-size: 20px;
   border-style: none;
   border-bottom-style: solid;
-  border-bottom-color: #3F51B5;
-  color: #3F51B5;
+  border-bottom-color: #304FFE;
+  color: #304FFE;
   outline: none;
 }
 
 .input-bar::placeholder {
-  color: #3F51B5;
+  color: #304FFE;
 }
 
 .input-container {
@@ -139,14 +139,14 @@
 }
 
 .button-purple {
-  background-color: #3F51B5;
+  background-color: #304FFE;
   color: white;
   border-radius: 5px;
   border-style: none;
 }
 
 .button-purple:hover {
-  background-color: #5C6BC0;
+  background-color: #536DFE;
 }
 
 .button-padding {
@@ -174,13 +174,13 @@ svg rect{
   padding-right: 30px;
   padding-left: 30px;
   font-family: 'Quicksand';
-  background-color: #1A237E;
+  background-color: #536DFE;
   color: white;
 }
 
 .dash-navigation {
   position: fixed;
-  background-color: #283593;
+  background-color: #3D5AFE;
   color: white;
   font-family: 'Quicksand';
   height: 100vh;
@@ -194,29 +194,29 @@ svg rect{
 }
 
 .dash-comp-container h6:hover {
-  color: #E8EAF6;
+  color: #E3F2FD;
   cursor: pointer;
 }
 
 .non-nav-page {
   margin-left: 205px;
-  color: #3F51B5;
+  color: #304FFE;
   font-family: "Quicksand";
 }
 
 .frontend-page-title {
-  background-color: #E8EAF6;
+  background-color: #E3F2FD;
   padding: 30px;
 }
 
 .backend-page-title {
-  background-color: #B39DDB;
+  background-color: #8C9EFF;
   color: white;
   padding: 30px;
 }
 
 .frontcompliance-page-title {
-  background-color: #9575CD;
+  background-color: #2962FF;
   color: white;
   padding: 30px;
 }
@@ -229,7 +229,7 @@ svg rect{
   padding-top: 20px;
   padding-bottom: 25px;
   font-family: 'Quicksand';
-  color: #3F51B5;;
+  color: #304FFE;;
 }
 
 .title-padding {
@@ -244,20 +244,20 @@ svg rect{
 
 .code-model {
   padding: 20px;
-  background-color: #E8EAF6;
-  color: #3F51B5;
+  background-color: #E3F2FD;
+  color: #304FFE;
   text-align: center;
 }
 
 .code-container {
-  color: #3F51B5;
-  background-color: #E8EAF6;
+  color: #304FFE;
+  background-color: #E3F2FD;
   width: 100%;
   padding: 20px;
 }
 
 .tag {
-  background-color: #3F51B5;
+  background-color: #304FFE;
   color: white;
   border-radius: 5px;
 }
@@ -272,18 +272,18 @@ svg rect{
   font-size: 20px;
   border-style: none;
   border-bottom-style: solid;
-  border-bottom-color: #3F51B5;
-  color: #3F51B5;
+  border-bottom-color: #304FFE;
+  color: #304FFE;
   outline: none;
   height: 100px;
 }
 
 .text-area-input::placeholder {
-  color: #3F51B5;
+  color: #304FFE;
 }
 
 .render-card {
-  background-color: #3F51B5;
+  background-color: #304FFE;
   color: white;
   padding: 30px;
   border-radius: 10px;
@@ -294,12 +294,12 @@ svg rect{
 }
 
 .render-card:hover{
-  background-color: #5C6BC0;
+  background-color: #2962FF;
 }
 
 .project-homepage-title {
   padding: 30px;
-  color: #3F51B5;
+  color: #304FFE;
 }
 
 .projects-homepage {
@@ -309,8 +309,8 @@ svg rect{
 .project-navigation {
   position: fixed;
   padding: 20px;
-  background-color: #E8EAF6;
-  color: #3F51B5;
+  background-color: #E3F2FD;
+  color: #304FFE;
   font-family: "Quicksand";
   height: 100vh;
   width: 200px;
@@ -323,7 +323,7 @@ svg rect{
   padding-left: 30px;
   font-family: "Quicksand";
   color: white;
-  background-color: #5C6BC0;
+  background-color: #2962FF;
 }
 
 .nav-comp-container {
@@ -353,7 +353,7 @@ svg rect{
 }
 
 .project-note {
-  background-color: #1A237E;
+  background-color: #304FFE;
   color: white;
   padding: 50px;
   width: 300px;
@@ -361,25 +361,25 @@ svg rect{
 }
 
 .project-note:hover {
-  background-color: #3F51B5;
+  background-color: #536DFE;
 }
 
 .user-search-container {
-  background-color: #1A237E;
+  background-color: #536DFE;
   color: white;
   padding: 7px;
   width: 100%;
 }
 
 .button-white {
-  background-color: white;
-  color: #3F51B5;
+  background-color: #E3F2FD;
+  color: #304FFE;
   border-radius: 5px;
   border-style: none;
 }
 
 .button-white:hover {
-  background-color: #E8EAF6;
+  background-color: #E3F2FD;
 }
 
 .pointer {
@@ -399,13 +399,13 @@ svg rect{
   padding-right: 10px;
   border-radius: 25px;
   border-style: solid;
-  border-color: #3F51B5;
-  color: #3F51B5;
+  border-color: #304FFE;
+  color: #304FFE;
   background-color: transparent;
 }
 
 .input-comment::placeholder {
-  color: #3F51B5;
+  color: #304FFE;
 }
 
 .columncard {
@@ -435,7 +435,7 @@ svg rect{
 
 .project-card {
   padding: 40px;
-  background-color: #3F51B5;
+  background-color: #304FFE;
   color: white;
   border-radius: 10px;
 }
@@ -461,4 +461,142 @@ svg rect{
   background-color: #3D5AFE;
   color: white;
   border-radius: 8px;
+}
+
+.users-spacing {
+  padding: 20px;
+}
+
+.users-container {
+  padding: 50px;
+  background-color: #3D5AFE;
+  color: white;
+}
+
+.users-container:hover {
+  background-color: #3D5AFE;
+}
+
+.pending-project {
+  background-color: #304FFE;
+  color: white;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.code-editor {
+  background-color: transparent;
+  border-style: none;
+  outline: none;
+  color: black;
+  width: 100%;
+}
+
+.service-box {
+  background-color: #2962FF;
+  color: white;
+  padding: 20px;
+}
+
+.button-major-padding {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.analyticspage {
+  padding: 15px;
+}
+
+.model-card {
+  padding: 50px;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.table {
+  background-color: #304FFE;
+  color: white;
+}
+
+.data-nav-bar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 30px;
+  padding-left: 30px;
+  background-color: #E3F2FD;
+  color: #2962FF;
+  font-family: "Quicksand";
+  position: fixed;
+  width: 100%;
+}
+
+.data-page {
+  padding: 20px;
+  font-family: "Quicksand";
+  color: #2962FF;
+  margin-left: 100px;
+}
+
+.table-data {
+  width: 100%;
+}
+
+.table-data-headers {
+  background-color: #3D5AFE;
+  color: white;
+}
+
+.table-header {
+  padding: 12px;
+}
+
+.table-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 40px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #E3F2FD;
+}
+
+
+.data-title {
+  padding-left: 40px;
+  width: 200px;
+}
+
+.data-nav {
+  position: fixed;
+  height: 100vh;
+  background-color: #2962FF;
+  color: white;
+  font-family: "Quicksand";
+}
+
+.data-whole-page {
+  padding-top: 50px;
+}
+
+.table-row:hover {
+  background-color: #E3F2FD;
+}
+
+.comp-container {
+  padding: 20px;
+}
+
+.button-red {
+  background-color: #EF5350;
+  color: white;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.project-auth {
+  padding: 15px;
+}
+
+.spacing-container {
+  padding: 10px;
 }

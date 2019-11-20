@@ -1,33 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 const Navigation = () => {
-    const [contact, setContact] = useState({
-        contact: false
-    })
-
-    const ContactModal = ({contactmodal}) => {
-        if (contactmodal === true) {
-            return (
-                <div className="modal-page">
-                 <div className="container">
-                  <div className="modal-padding">
-                  <div className="modal-box">
-                   <span className="closebtndark" onClick={() => {
-                       setContact({
-                           contact: false
-                       })
-                   }}>&times;</span>
-                   <h1>CONTACT</h1>
-                  </div>
-                  </div>
-                 </div>
-                </div>
-            )
-        } else {
-            return null;
-        }
-    }
     return (
         <div>
          <div className="navigation-bar">
@@ -45,11 +19,7 @@ const Navigation = () => {
               <h6 className="text-center">PRICING</h6>
              </div>
              <div className="col-md-4">
-              <h6 className="text-center" onClick={() => {
-                  setContact({
-                      contact: true
-                  })
-              }}>CONTACT</h6>
+              <NavLink className="navlink" to="/Admin"><h6 className="text-center">ADMIN</h6></NavLink>
              </div>
              </div>
             </div>
@@ -68,7 +38,6 @@ const Navigation = () => {
            </div>
           </div>
          </div>
-         <ContactModal contactmodal={contact.contact}/>
         </div>
     )
 }

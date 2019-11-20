@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 const PrivateRoute = ({path ,comp, isAuthenticated, ...rest}) => {
 
     if (isAuthenticated === true) {
-        return <Route exact path={path} component={comp}  />
+        return <Route path={path} component={comp} exact/>
     } else {
         return <Redirect to="/" />
     }

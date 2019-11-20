@@ -24,16 +24,120 @@ const FrontCompliance = ({frontcompliance}) => {
 }
 
 const BackEndPage = ({backendpage}) => {
+    const [backendres, setBackendres] = useState({
+        backendres: []
+    })
+    const [currentComponent, setCurrentComponent] = useState({
+        currentComponent: []
+    })
+    const [modalComponent, setModalComponent] = useState({
+        modalComponent: false
+    })
+
+    
+
+    useEffect(() => {
+      fetch('/api/backend/getbackendcomps')
+      .then((res) => {
+          return res.json();
+      }).then((body) => {
+          setBackendres({
+              backendres: body
+          })
+      }).catch((error) => {
+          console.log(error);
+      })
+    }, [])
+
+    const ModalCurrentComponent = ({modalcomponent}) => {
+        if (modalcomponent === true) {
+            return (
+                <div>
+                    <div className="modal-page">
+                     <div className="container">
+                      <div className="modal-padding">
+                        <div className="modal-box">
+                          <span className="closebtndark" onClick={() => {
+                              setModalComponent({
+                                  modalComponent: false
+                              })
+                          }}>&times;</span>
+                          <h4>{currentComponent.currentComponent.componentname}</h4>
+                          <div className="row">
+                          {
+                              currentComponent.currentComponent.componenttags.map((item) => (
+                                 <div key={currentComponent.currentComponent.componenttags.indexOf(item)}>
+                                    <div className="tag-padding">
+                                        <h6 className="tag d-inline-flex p-2">{item}</h6>
+                                    </div>
+                                 </div>
+                              ))
+                          }
+                          </div>
+                          <div className="text-padding">
+                            <h5>{currentComponent.currentComponent.description}</h5>
+                          </div>
+                          <div className="code-padding-container">
+                            <div className="code-container">
+                              <pre>
+                                  {currentComponent.currentComponent.model}
+                              </pre>
+                            </div>
+                          </div>
+                          <div className="text-padding">
+                            {
+                                currentComponent.currentComponent.install.map((item) => (
+                                    <div key={currentComponent.currentComponent.install.indexOf(item)}>
+                                       <div className={item.className}>
+                                         <h5>{item.text}</h5>
+                                       </div> 
+                                    </div>
+                                ))
+                            }
+                          </div>
+                        </div>
+                      </div>
+                     </div>
+                    </div>
+                </div>
+            )
+        } else {
+            return null
+        }
+    }
+
+
     if (backendpage === true) {
         return (
-             <div className="non-nav-page">
+             <div>
+                 <div className="non-nav-page">
                  <div className="backend-page-title">
                   <h2>BACK END</h2>
                  </div>
                  <div className="page-content">
                   <h3>Back End API's</h3>
+                  <div className="input-container">
+                   <Search 
+                   inputstyle="input-bar"
+                   renderstyle="render-card"
+                   output={["componentname" , "description"]}
+                   variable={backendres.backendres}
+                   placeholder="Search for a Backend function"
+                   longRender={true}
+                   callback={(item) => {
+                    setCurrentComponent({
+                        currentComponent: item
+                    })
+                    setModalComponent({
+                        modalComponent: true
+                    })
+                   }}
+                   />
+                  </div>
                  </div>
               </div>
+              <ModalCurrentComponent modalcomponent={modalComponent.modalComponent}  />
+             </div>
         )
     } else {
         return null;
@@ -174,6 +278,18 @@ const Projects = ({projectcomponent}) => {
     const [projects, setProjects] = useState({
         projects: []
     })
+    const [pendingprojects, setPendingRes] = useState({
+        pendingprojects: []
+    })
+    const [currentprojects, setCurrentProjects] = useState({
+        currentprojects: true
+    })
+    const [pendingProjects, setPendingProjects] = useState({
+        pendingProjects: false
+    })
+    const [users, setGetUsers] = useState({
+        users: []
+    })
 
     const componentDidMount = useRef(false);
     
@@ -187,13 +303,34 @@ const Projects = ({projectcomponent}) => {
             .then((res) => {
                 return res.json();
             }).then((body) => {
-                console.log(body);
                 setProjects({
                     projects: body
                 })
             }).catch((error) => {
                 console.log(error);
             })
+
+              fetch('/api/dash/getpendingrequest/' + JPIAuth.currentUser.userid)
+                .then((res) => {
+                    return res.json();
+                }).then((body) => {
+                    setPendingRes({
+                        pendingprojects: body
+                    })
+                }).catch((error) => {
+                    console.log(error);
+                })
+
+                fetch('/api/dash/getusers')
+                .then((res) => {
+                    return res.json();
+                }).then((body) => {
+                    setGetUsers({
+                      users: body
+                    })
+                }).catch((error) => {
+                    console.log(error)
+                })
           }
        }
        }, 500);
@@ -202,6 +339,49 @@ const Projects = ({projectcomponent}) => {
          componentDidMount.current = false
         }
     }, [projectcomponent])
+
+    const ShowPending = () => {
+        return (
+            <div>
+             <div className="row">
+              {
+                  pendingprojects.pendingprojects.map((item) => (
+                      <div key={pendingprojects.pendingprojects.indexOf(item)}>
+                        <div className="card-spacing">
+                         <div className="pending-project">
+                          <h4>{item.projectname}</h4>
+                          <div className="d-flex justify-content-center">
+                          <div className="button-padding">
+                            <button className="button-white" onClick={() => {
+                                fetch('/api/dash/connectproject/' + item.projectapi + '/' + JPIAuth.currentUser.userid)
+                                .then((res) => {
+                                    return res.json();
+                                }).then((body) => {
+                                    projects.projects.push(body);
+                                    setProjects({
+                                        projects: projects.projects
+                                    })
+                                    setPendingProjects({
+                                        pendingProjects: false
+                                    })
+                                    setCurrentProjects({
+                                        currentprojects: true
+                                    })
+                                }).catch((error) => {
+                                    console.log(error);
+                                })
+                            }}>JOIN</button>
+                          </div>
+                          </div>
+                         </div>
+                        </div>
+                      </div>
+                  ))
+              }
+             </div>
+            </div>
+        )
+    }
 
 
     const ProjectCards = () => {
@@ -238,9 +418,6 @@ const Projects = ({projectcomponent}) => {
 
 
     const CreatModal = ({createmodal}) => {
-        const [users, setGetUsers] = useState({
-            users: []
-        })
         const [projectname, setProjectName] = useState({
             projectname: ''
         })
@@ -251,28 +428,6 @@ const Projects = ({projectcomponent}) => {
             requestedusers: []
         })
        
-        const subComponentDidMount = useRef(null);
-        useEffect(() => {
-        subComponentDidMount.current = true;
-        if (createmodal === true) {
-            if (subComponentDidMount.current) {
-                setTimeout(() => {
-                fetch('/api/dash/getusers')
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
-                    setGetUsers({
-                      users: body
-                    })
-                }).catch((error) => {
-                    console.log(error)
-                })
-                }, 500);
-            }
-        }
-
-        return () => {subComponentDidMount.current = false}
-        } , [createmodal])
        
         if (createmodal === true) {
             return (
@@ -357,30 +512,85 @@ const Projects = ({projectcomponent}) => {
         }
     }
 
+    const CurrentProjects = ({currentproject}) => {
+        if (currentproject === true) {
+            return (
+                <div>
+                     <div className="project-homepage-title">
+                        <div className="float-right">
+                        <button className="button-purple" onClick={() => {
+                            setCreateModal({
+                                createmodal: true
+                            })
+                        }}>CREATE PROJECT</button>
+                        <div className="button-padding">
+                        <button className="button-white" onClick={() => {
+                            setCurrentProjects({
+                                currentprojects: false
+                            })
+                            setPendingProjects({
+                                pendingProjects: true
+                            })
+                        }}>PENDING PROJECTS</button>
+                        </div>
+                        </div>
+                        <h4>PROJECTS</h4>
+                    </div>
+                    <div className="projects-homepage">
+                        <h6>Allow your projects to get the best services so that your users are given the best experience that your project has to offer.</h6>
+                        <div className="title-padding">
+                        <h3>YOUR PROJECTS</h3>
+                        </div>
+                        <ProjectCards/>
+                    </div>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
+    const PendingProjects = ({pendingprojects}) => {
+        if(pendingprojects === true) {
+            return (
+                <div>
+                 <div>
+                   <div className="project-homepage-title">
+                     <div className="float-right">
+                      <button className="button-white" onClick={() => {
+                          setCurrentProjects({
+                              currentprojects: true
+                          })
+                          setPendingProjects({
+                              pendingProjects: false
+                          })
+                      }}>CURRENT PROJECTS</button>
+                     </div>
+                     <h4>PENDING PROJECTS</h4>
+                     </div>
+                 </div>
+                 <div className="projects-homepage">
+                    <h6>Connect to your pending projects</h6>
+                    <div className="title-padding">
+                    <h3>PENDING PROJECTS</h3>
+                    </div>
+                    <div className="text-padding">
+                      <ShowPending/>
+                    </div>
+                </div>
+                </div>
+            )
+        } else {
+            return null;
+        }
+    }
+
     if (projectcomponent === true) {
         return (
             <div>
              <div className="non-nav-page">
-             <div className="project-homepage-title">
-                 <div className="float-right">
-                  <button className="button-purple" onClick={() => {
-                      setCreateModal({
-                          createmodal: true
-                      })
-                  }}>CREATE PROJECT</button>
-                  <div className="button-padding">
-                  <button className="button-white">PENDING PROJECTS</button>
-                  </div>
-                 </div>
-                 <h4>PROJECTS</h4>
-             </div>
-              <div className="projects-homepage">
-                <h6>Allow your projects to get the best services so that your users are given the best experience that your project has to offer.</h6>
-                <div className="title-padding">
-                 <h3>YOUR PROJECTS</h3>
-                </div>
-                <ProjectCards/>
-              </div>
+              <CurrentProjects currentproject={currentprojects.currentprojects}/>
+              <PendingProjects pendingprojects={pendingProjects.pendingProjects}/>
              </div>
              <CreatModal createmodal={createmodal.createmodal} />
             </div>

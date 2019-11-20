@@ -7,3 +7,5 @@ export const generateId = (length) => {
     }
     return result;
 }
+
+export default generateId;

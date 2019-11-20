@@ -10,6 +10,7 @@ import SetComponent from './Admin/Setcomponent';
 import ProjectDetails from './AuthPages/ProjectPages/Projecthome';
 import PrivateRoute from './Security/PrivateRoute';
 import { JPIAuth } from './Authentication/Auth';
+import Tablepage from './AuthPages/ProjectAnalytics/Tablepage'
 
 const App = () => {
  
@@ -42,6 +43,7 @@ const App = () => {
       <Route path="/" component={Home} exact/>
       <PrivateRoute path="/Dash" comp={Dash} isAuthenticated={authenticated.authenticated} />
       <PrivateRoute path="/project/:projectapi" comp={ProjectDetails} isAuthenticated={authenticated.authenticated} />
+      <PrivateRoute path="/project/projectanalytics/:projectapi/:tableapi" comp={Tablepage} isAuthenticated={authenticated.authenticated} />
      </BrowserRouter>
     </div>
   );
