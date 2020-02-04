@@ -19,7 +19,7 @@ const Navigation = () => {
               <h6 className="text-center">PRICING</h6>
              </div>
              <div className="col-md-4">
-              <NavLink className="navlink" to="/Admin"><h6 className="text-center">ADMIN</h6></NavLink>
+              <NavLink className="navlink color-white" to="/Admin"><h6 className="text-center">ADMIN</h6></NavLink>
              </div>
              </div>
             </div>
@@ -27,10 +27,10 @@ const Navigation = () => {
               <div className="float-right">
               <div className="row">
                 <div className="col-md-6">
-                <NavLink to="/Login" className="navlink"><h6 className="text-center">LOGIN</h6></NavLink>
+                <NavLink to="/Login" className="navlink color-white"><h6 className="text-center">LOGIN</h6></NavLink>
                 </div>  
                 <div className="col-md-6">
-                <NavLink to="/Register" className="navlink"><h6 className="text-center">REGISTER</h6></NavLink>
+                <NavLink to="/Register" className="navlink color-white"><h6 className="text-center">REGISTER</h6></NavLink>
                 </div>  
               </div>
               </div>

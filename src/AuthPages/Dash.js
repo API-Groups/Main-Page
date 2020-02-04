@@ -3,6 +3,7 @@ import Search from '../Functions/Search'
 import {JPIAuth} from '../Authentication/Auth';
 import LoadingPage from '../Functions/Loadingpage';
 import {NavLink} from 'react-router-dom';
+import LoadingComponent from '../Functions/LoadingComp'
 
 const FrontCompliance = ({frontcompliance}) => {
     if (frontcompliance === true) {
@@ -10,7 +11,7 @@ const FrontCompliance = ({frontcompliance}) => {
             <div>
              <div className="non-nav-page">
                 <div className="frontcompliance-page-title">
-                    <h2>FRONT COMPONENT COMPLIANCE</h2>
+                    <h2>Front components Compliance</h2>
                 </div>
                 <div className="page-content">
                  <h3>Front Component Compliance</h3>
@@ -34,19 +35,24 @@ const BackEndPage = ({backendpage}) => {
         modalComponent: false
     })
 
-    
+    const componentDidMount = useRef(false);
 
     useEffect(() => {
-      fetch('/api/backend/getbackendcomps')
-      .then((res) => {
-          return res.json();
-      }).then((body) => {
-          setBackendres({
-              backendres: body
-          })
-      }).catch((error) => {
-          console.log(error);
-      })
+      componentDidMount.current = true;
+      if (componentDidMount.current) {
+        fetch('/api/backend/getbackendcomps')
+        .then((res) => {
+            return res.json();
+        }).then((body) => {
+            setBackendres({
+                backendres: body
+            })
+        }).catch((error) => {
+            console.log(error);
+        })
+      }
+
+      return () => {componentDidMount.current = false}
     }, [])
 
     const ModalCurrentComponent = ({modalcomponent}) => {
@@ -112,7 +118,7 @@ const BackEndPage = ({backendpage}) => {
              <div>
                  <div className="non-nav-page">
                  <div className="backend-page-title">
-                  <h2>BACK END</h2>
+                  <h2>Back End</h2>
                  </div>
                  <div className="page-content">
                   <h3>Back End API's</h3>
@@ -175,7 +181,7 @@ const FrontEndPage = ({frontendpage}) => {
     }
 
     return () => {componentDidMount.current = false}
-    }, [currentComponent.currentComponent , frontendpage])
+    }, [frontendpage])
     
 
     const ModalCurrentComponent = ({modalcomponent}) => {
@@ -240,7 +246,7 @@ const FrontEndPage = ({frontendpage}) => {
             <div>
               <div className="non-nav-page">
                  <div className="frontend-page-title">
-                  <h3>FRONT END</h3>
+                  <h3>Front End</h3>
                   <h6>Front End Functions and components that help you develop a better interface with much cleaner run time. All Front end functions are free.</h6>
                  </div>
                  <div className="page-content">
@@ -275,6 +281,9 @@ const Projects = ({projectcomponent}) => {
     const [createmodal, setCreateModal] = useState({
         createmodal: false
     })
+    const [loadingComponent, setLoadingComponent] = useState({
+        loadingComponent: true
+    })
     const [projects, setProjects] = useState({
         projects: []
     })
@@ -305,6 +314,12 @@ const Projects = ({projectcomponent}) => {
             }).then((body) => {
                 setProjects({
                     projects: body
+                })
+                setLoadingComponent({
+                    loadingComponent: false
+                })
+                setCurrentProjects({
+                    currentprojects: true
                 })
             }).catch((error) => {
                 console.log(error);
@@ -385,35 +400,35 @@ const Projects = ({projectcomponent}) => {
 
 
     const ProjectCards = () => {
-        if (projects.projects !== 0) {
-            return (
-                <div>
-                 <div className="row">
-                 {
-                     projects.projects.map((item) => (
-                        <div key={projects.projects.indexOf(item)}>
-                         <div className="card-spacing">
-                          <NavLink className="nav-card" to={"/project/" + item.projectapi}>
-                          <div className="project-card">
-                           <h4 className="text-center">{item.projectname}</h4>
-                          </div>
-                          </NavLink>
-                         </div>
-                        </div>
-                     ))
-                 }
-                 </div>
-                </div>
-            )
-        } else {
-            return (
-                <div>
-                 <div className="title-padding">
-                  <h2 className="text-center">YOU ARE NOT APART OF ANY GROUPS</h2>
-                 </div>
-                </div>
-            )
-        }
+            if (projects.projects !== 0) {
+                return (
+                    <div>
+                     <div className="row">
+                     {
+                         projects.projects.map((item) => (
+                            <div key={projects.projects.indexOf(item)}>
+                             <div className="card-spacing">
+                              <NavLink className="nav-card" to={"/project/" + item.projectapi}>
+                              <div className="project-card">
+                               <h4 className="text-center">{item.projectname}</h4>
+                              </div>
+                              </NavLink>
+                             </div>
+                            </div>
+                         ))
+                     }
+                     </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                     <div className="title-padding">
+                      <h2 className="text-center">YOU ARE NOT APART OF ANY GROUPS</h2>
+                     </div>
+                    </div>
+                )
+            }
     }
 
 
@@ -462,7 +477,7 @@ const Projects = ({projectcomponent}) => {
                       output={["username" , "fullname", "firstname"]}
                       variable={users.users}
                       placeholder="People you want to add"
-                      longRender={true}
+                      longRender={false}
                       callback={(item) => {
                         requestedusers.requestedusers.push(item.userid)
                         setRequestedUsers({
@@ -524,7 +539,7 @@ const Projects = ({projectcomponent}) => {
                             })
                         }}>CREATE PROJECT</button>
                         <div className="button-padding">
-                        <button className="button-white" onClick={() => {
+                        <button className="button-all-white" onClick={() => {
                             setCurrentProjects({
                                 currentprojects: false
                             })
@@ -536,13 +551,14 @@ const Projects = ({projectcomponent}) => {
                         </div>
                         <h4>PROJECTS</h4>
                     </div>
-                    <div className="projects-homepage">
+                     <div className="projects-homepage">
                         <h6>Allow your projects to get the best services so that your users are given the best experience that your project has to offer.</h6>
                         <div className="title-padding">
                         <h3>YOUR PROJECTS</h3>
                         </div>
+                        <LoadingComponent loadingComponent={loadingComponent.loadingComponent} />
                         <ProjectCards/>
-                    </div>
+                     </div>
                 </div>
             )
         } else {
@@ -642,13 +658,14 @@ const Dash = () => {
             <div>
               <div className="dash-navbar">
                <div className="float-right">
-                <button className="button-white" onClick={() => {
+                <button className="button-all-white" onClick={() => {
                     JPIAuth.logout();
                 }}>LOGOUT</button>
                </div>
                <h5>{JPIAuth.currentUser.username}</h5>
               </div>
-              <div className="dash-navigation">
+             <div className="dash">
+             <div className="dash-navigation">
                 <div className="container">
                  <div className="dash-comp-container">
                   <h6 onClick={() => {
@@ -716,6 +733,7 @@ const Dash = () => {
                  </div>
                 </div>
               </div>
+             </div>
               <FrontEndPage frontendpage={frontend.frontend} />
               <BackEndPage backendpage={backend.backend} />
               <FrontCompliance frontcompliance={frontcompliance.frontcompliance} />

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
-import {BrowserRouter , Route} from 'react-router-dom';
+import {HashRouter , Route} from 'react-router-dom';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import './App.css'
@@ -36,7 +36,7 @@ const App = () => {
  
   return (
     <div>
-     <BrowserRouter>
+     <HashRouter basename="/">
       <Route path="/Login" component={Login} exact />
       <Route path="/Register" component={Register} exact />
       <Route path="/Admin" component={SetComponent} exact />
@@ -44,7 +44,7 @@ const App = () => {
       <PrivateRoute path="/Dash" comp={Dash} isAuthenticated={authenticated.authenticated} />
       <PrivateRoute path="/project/:projectapi" comp={ProjectDetails} isAuthenticated={authenticated.authenticated} />
       <PrivateRoute path="/project/projectanalytics/:projectapi/:tableapi" comp={Tablepage} isAuthenticated={authenticated.authenticated} />
-     </BrowserRouter>
+     </HashRouter>
     </div>
   );
 }

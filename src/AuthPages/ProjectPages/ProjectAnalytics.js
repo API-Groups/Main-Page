@@ -1,8 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Search from '../../Functions/Search';
 import {NavLink} from 'react-router-dom';
-//import JPID from '../../Test/testdata';
-
+import LoadingComponent from '../../Functions/LoadingComp'
 const ProjectAnalytics = ({projectanalytics, api}) => {
     const [datamodel, setDataModel] = useState({
         datamodel: false
@@ -13,33 +12,56 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
     const [models, setModels] = useState({
         models: []
     })
-    
+    const [modelShow, setModelShow] = useState({
+        modelShow: false
+    })
+    const [loading, setLoading] = useState({
+        loading: true
+    })
+
+    const componentMounted = useRef(false);
 
     useEffect(() => {
-      fetch('/api/project/getprojectusers/' + api)
-      .then((res) => {
-          return res.json();
-      }).then((body) => {
-          setProjectUsers({
-              projectusers: body
-          })
-      }).catch((error) => {
-          console.log(error);
-      })
+      componentMounted.current = true;
+      if (projectanalytics === true) {
+        setTimeout(() => {
+          if (componentMounted.current) {
+            fetch('/api/project/getprojectusers/' + api)
+            .then((res) => {
+                return res.json();
+            }).then((body) => {
+                setProjectUsers({
+                    projectusers: body
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+      
+            fetch('/projectanalytics/getmodels/' + api)
+            .then((res) => {
+                return res.json();
+            }).then((body) => {
+                setModels({
+                    models: body
+                })
+                setLoading({
+                    loading: false
+                })
+                setModelShow({
+                    modelShow: true
+                })
+            }).catch((error) => {
+                console.log(error);
+            })
+          }
+        }, 1000);
+      }
+      return () => {
+          componentMounted.current = false
+        }
+    }, [api, projectanalytics])
 
-      fetch('/projectanalytics/getmodels/' + api)
-      .then((res) => {
-          return res.json();
-      }).then((body) => {
-          console.log(body);
-          setModels({
-              models: body
-          })
-      }).catch((error) => {
-          console.log(error);
-      })
-
-    }, [api])
+    console.log(loading.loading)
 
     const CreateDataModel = ({dataform}) => {
         const [modelname, setModelName] = useState({
@@ -132,7 +154,7 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
                      <button className="button-white" onClick={() => {
                          const data = {
                              modelname: modelname.modelname,
-                             modeldescription: modeldescription.modeldescriptionm,
+                             modeldescription: modeldescription.modeldescription,
                              dataviewers: dataviewers.dataviewers,
                              datadevs: datadevs.datadevs,
                              datatype: datatype.datatype
@@ -148,7 +170,10 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
                          }).then((res) => {
                              return res.json();
                          }).then((body) => {
-                             console.log(body);
+                             models.models.push(body);
+                             setModels({
+                                 models: models.models
+                             })
                              setDataModel({
                                  datamodel: false
                              })
@@ -168,27 +193,154 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
         }
     }
 
-    const ModelCards = () => {
-        return (
-            <div>
-             <div className="row">
-                {
-                    models.models.map((item) => (
-                        <div key={models.models.indexOf(item)}>
-                         <div className="card-spacing">
-                          <NavLink to={item.redirectapi} className="navlink" >
-                          <div className={"model-card " + item.modeltype}>
-                            <h6>{item.modeltype}</h6>
-                            <h4 className="text-center">{item.modelname}</h4>
-                          </div>
-                          </NavLink>
+    console.log(models.models)
+
+    const ModelCards = ({modelcards}) => {
+        const [currentModelCard, setModelCard] = useState({
+            currentModelCard: false
+        })
+        const [currentModelItem, setCurrentModelItem] = useState({
+            currentModelItem: {}
+        })
+
+        const CurrentModelCard = ({currentmodelcard, item}) => {
+            const [itemName, setItemName] = useState({
+                itemname: ""
+            })
+            const [itemDescription, setItemDescription] = useState({
+                itemDescription: ""
+            })
+            const NullItem = () => {
+                return item.modeldescription === null ? "There is no current description. Write one !" : item.modeldescription
+            }
+            if (currentmodelcard === true) {
+                return (
+                    <div>
+                     <div className="modal-page">
+                      <div className="container">
+                        <div className="modal-padding">
+                         <div className="modal-box">
+                          <span className="closebtndark" onClick={() => {
+                              setModelCard({
+                                  currentModelCard: false
+                              })
+                          }}>&times;</span>
+                         <h3>{item.modelname}</h3>
+                         <div className="input-container">
+                          <input type="text" className="input-bar" placeholder={item.modelname} onChange={(e) => {
+                              setItemName({
+                                  itemname: e.target.value
+                              })
+                          }} />
+                         </div>
+                         <div className="input-container">
+                          <input type="text" className="input-bar" placeholder={NullItem()} onChange={(e) => {
+                              setItemDescription({
+                                  itemDescription: e.target.value
+                              })
+                          }} />
+                         </div>
+                         <div className="button-padding">
+                          <button className="button-purple" onClick={() => {
+                              const data = {title: itemName.itemname, description: itemDescription.itemDescription}
+                              fetch('/projectanalytics/setModelName/' + api + '/' + item.modelapi , {
+                                method: 'POST',
+                                headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(data)
+                              }).then((res) => {
+                                 return res.json();
+                              }).then((body) => {
+                                  let currentIndex = null
+                                  for (const item of models.models) {
+                                      if (item.modelapi === body.modelapi) {
+                                          currentIndex = models.models.indexOf(item);
+                                      }
+                                  }
+                                  if (~currentIndex) {
+                                      models.models[currentIndex] = body
+                                  }
+
+                                  setModels({
+                                      models: models.models
+                                  })
+                                  setCurrentModelItem({
+                                      currentModelItem: false
+                                  })
+                              }).catch((error) => {
+                                  console.log(error);
+                              })
+                          }}>EDIT</button>
+                         </div>
                          </div>
                         </div>
-                    ))
-                }
-             </div>
-            </div>
-        )
+                      </div>
+                     </div>
+                    </div>
+                )
+            } else {
+                return null;
+            }
+        }
+
+        if (modelcards === true) {
+            if (models.models.length === 0) {
+                return (
+                    <div>
+                     <div className="empty-padding">
+                     <div className="empty-model-container">
+                      <h2>You have No Models right now</h2>
+                      <div className="button-padding">
+                        <button className="button-all-white" onClick={() => {
+                            setDataModel({
+                                datamodel: true
+                            })
+                        }}>CREATE MODEL</button>
+                      </div>
+                     </div>
+                     </div>
+                    </div>
+                )
+            } else {
+                return (
+                    <div>
+                     <div className="row">
+                        {
+                            models.models.map((item) => (
+                                <div key={models.models.indexOf(item)}>
+                                 <div className="card-spacing">
+                                  <div className="model-edit-container">
+                                   <div className="float-right">
+                                    <button className="button-all-white" onClick={() => {
+                                         setModelCard({
+                                             currentModelCard: true
+                                         })
+                                         setCurrentModelItem({
+                                             currentModelItem: item
+                                         })
+                                     }} >Edit</button>
+                                   </div>
+                                  </div>
+                                  <NavLink to={item.redirectapi} className="navlink">
+                                  <div className={"model-card " + item.modeltype}>
+                                    <h6 className="color-white">{item.modeltype}</h6>
+                                    <h4 className="text-center color-white">{item.modelname}</h4>
+                                  </div>
+                                  </NavLink>
+                                 </div>
+                                 <CurrentModelCard currentmodelcard={currentModelCard.currentModelCard} item={currentModelItem.currentModelItem} />
+                                </div>
+                            ))
+                        }
+                     </div>
+                    </div>
+                )
+            }
+        } else {
+            return null;
+        }
     }
 
     if (projectanalytics === true) {
@@ -207,11 +359,13 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
                   </div>
                   <h3>PROJECT ANALYTICS</h3>
                   <div className="input-container">
-                     <ModelCards/>
+                     <ModelCards modelcards={modelShow.modelShow}/>
+                     <LoadingComponent loadingComponent={loading.loading} />
                   </div>
                  </div>
                 </div>
                 <CreateDataModel dataform={datamodel.datamodel} /> 
+                
             </div>
         )
     } else {

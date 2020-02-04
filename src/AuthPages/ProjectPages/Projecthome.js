@@ -9,7 +9,7 @@ import LoadingBluePage from '../../MiscComps/Wholeloadingblue';
 
 const ProjectDetails = (props) => {
     const [apipage, setApiPage] = useState({
-        apipage: false
+        apipage: true
     })
     const [notes, setNotes] = useState({
         notes:  false
@@ -18,10 +18,10 @@ const ProjectDetails = (props) => {
         userspage: false
     })
     const [projectAnalytics, setProjectAnalytics] = useState({
-        projectAnalytics: true
+        projectAnalytics: false
     })
-    const [projectdetails, setProjectdetails] = useState({
-        projectdetails: {}
+    const [projectname, setProjectName] = useState({
+        projectName: ''
     })
     const [projectauth, setProjectAuth] = useState({
         projectauth: false
@@ -39,16 +39,22 @@ const ProjectDetails = (props) => {
             setTimeout(() => {
                 fetch('/api/project/getprojectcreds/' + projectapi)
                 .then((res) => {
-                    return res.json()
+                    return res.text()
                 }).then((body) => {
-                    setProjectdetails({
-                        projectdetails: body
+                    setProjectName({
+                        projectName: body
                     })
                     setLoadingPage({
                         loadingpage: false
                     })
+                }).catch((error) => {
+                    console.log(error);
                 })
             }, 1000);
+        } else if (componentDidMount.current === false) {
+            setLoadingPage({
+                loadingpage: true
+            })
         }
      }
     }, [props.match.params])
@@ -59,10 +65,30 @@ const ProjectDetails = (props) => {
           <div className="float-right">
             <NavLink className="navlink" to="/Dash"><button className="button-white">DASHBOARD</button></NavLink>
           </div>
-          <h4>{projectdetails.projectdetails.projectname}</h4>
+          <h4>{projectname.projectName}</h4>
         </div>
+        <div className="project">
         <div className="project-navigation">
          <div className="container">
+         <div className="nav-comp-container">
+          <h6 className="pointer" onClick={() => {
+            setApiPage({
+                apipage: true
+            })
+            setNotes({
+                notes: false
+            })
+            setUsersPage({
+                userspage: false
+            })
+            setProjectAnalytics({
+                projectAnalytics: false
+            })
+            setProjectAuth({
+                projectauth: false
+            })
+          }}>API's</h6>
+          </div>
           <div className="nav-comp-container">
           <h6 className="pointer" onClick={() => {
             setApiPage({
@@ -100,25 +126,6 @@ const ProjectDetails = (props) => {
                 projectauth: true
             })
           }}>Authentication</h6>
-          </div>
-          <div className="nav-comp-container">
-          <h6 className="pointer" onClick={() => {
-            setApiPage({
-                apipage: true
-            })
-            setNotes({
-                notes: false
-            })
-            setUsersPage({
-                userspage: false
-            })
-            setProjectAnalytics({
-                projectAnalytics: false
-            })
-            setProjectAuth({
-                projectauth: false
-            })
-          }}>API's</h6>
           </div>
           <div className="nav-comp-container">
           <h6 className="pointer" onClick={() => {
@@ -167,6 +174,7 @@ const ProjectDetails = (props) => {
             <ProjectAnalytics projectanalytics={projectAnalytics.projectAnalytics} api={props.match.params.projectapi} />
             <LoadingBluePage loadingprocess={loadingpage.loadingpage} />
             <Projectauth projectauth={projectauth.projectauth} projectapi={props.match.params.projectapi} />
+        </div>
         </div>
         </div>
     )

@@ -1,19 +1,37 @@
-@import url("https://fonts.googleapis.com/css?family=Quicksand");
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+.footer-component {
+  background-color: #283593;
+  color: white;
+  font-family: "Roboto";
+  padding: 40px;
+  height: 100vh;
+}
+
+.home-page {
+ background-color: white;
+ color: #001064;
+}
+
+.footer-padding {
+  padding-top: 150px;
+}
 
 .navigation-bar {
-  color: #304FFE;
+  color: white;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-family: "Quicksand";
+  font-family: "Roboto";
+  background-color: #5f5fc4;
   position: fixed;
   width: 100%;
+  z-index: 98;
 }
 
 .major-padding-page {
   padding-top: 250px;
-  padding-bottom: 250px;
-  color: #304FFE;
-  font-family: "Quicksand";
+  padding-bottom: 220px;
+  font-family: "Roboto";
 }
 
 .modal-page {
@@ -26,8 +44,8 @@
   overflow: auto; 
   background-color: rgb(0,0,0); 
   background-color: rgba(0,0,0,0.4); 
-  color: #304FFE;
-  font-family: "Quicksand";
+  color: #432c5b;
+  font-family: "Roboto";
 }
 
 .modal-page-purple {
@@ -38,10 +56,27 @@
   width: 100%;
   height: 100%; 
   overflow: auto; 
-  background-color:#304FFE; 
+  background-color:#7e71a4; 
   color: white;
-  font-family: "Quicksand";
+  font-family: "Roboto";
+  z-index: 100;
 }
+
+.modal-page-light-purple {
+  position: fixed; 
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%; 
+  overflow: auto; 
+  background-color:#6b5895; 
+  color: white;
+  font-family: "Roboto";
+  z-index: 99;
+}
+
+
 
 .modal-page-blue {
   position: fixed; 
@@ -51,9 +86,10 @@
   width: 100%;
   height: 100%; 
   overflow: auto; 
-  background-color:#3D5AFE; 
+  background-color:#4b1afc; 
   color: white;
-  font-family: "Quicksand";
+  font-family: "Roboto";
+  z-index: 99;
 }
 
 .modal-page-white {
@@ -65,18 +101,18 @@
   height: 100%; 
   overflow: auto; 
   background-color:white; 
-  color: #304FFE;
-  font-family: "Quicksand";
+  color: #283593;
+  font-family: "Roboto";
 }
 
 .modal-box {
   background-color: white;
-  color: #304FFE;
+  color: #283593;
   padding: 50px;
 }
 
 .closebtndark {
-  color: #304FFE;
+  color: #283593;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -84,7 +120,7 @@
 
 .closebtndark:hover,
 .closebtndark:focus {
-  color: #304FFE;
+  color: #283593;
   text-decoration: none;
   cursor: pointer;
 }
@@ -101,8 +137,8 @@
 .page {
   padding-top: 100px;
   padding-bottom: 20px;
-  font-family: "Quicksand";
-  color: #304FFE;
+  font-family: "Roboto";
+  color: #283593;
 }
 
 .navlink {
@@ -111,6 +147,7 @@
 
 .navlink:hover {
   text-decoration: none;
+  color: #c5cae9;
 }
 
 .input-bar {
@@ -119,13 +156,14 @@
   font-size: 20px;
   border-style: none;
   border-bottom-style: solid;
-  border-bottom-color: #304FFE;
-  color: #304FFE;
+  border-bottom-color: #283593;
+  color: #283593;
   outline: none;
+  background-color: transparent;
 }
 
 .input-bar::placeholder {
-  color: #304FFE;
+  color: #283593;
 }
 
 .input-container {
@@ -139,19 +177,41 @@
 }
 
 .button-purple {
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
   border-radius: 5px;
   border-style: none;
 }
 
+.button-black {
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.button-all-white {
+  background-color: white;
+  color: #001064;
+  border-radius: 5px;
+  border-style: none;
+}
+
 .button-purple:hover {
-  background-color: #536DFE;
+  background-color: #5f5fc4;
+}
+
+.button-black:hover {
+  background-color: grey;
 }
 
 .button-padding {
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.button-spacing {
+  padding-right: 10px;
 }
 
 .text-white {
@@ -173,16 +233,22 @@ svg rect{
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
-  font-family: 'Quicksand';
-  background-color: #536DFE;
+  font-family: 'Roboto';
+  background-color: #5c6bc0;
   color: white;
+  position: fixed;
+  width: 100%;
+}
+
+.dash {
+  padding-top: 50px;
 }
 
 .dash-navigation {
   position: fixed;
-  background-color: #3D5AFE;
+  background-color: #001064;
   color: white;
-  font-family: 'Quicksand';
+  font-family: 'Roboto';
   height: 100vh;
   padding-top: 20px;
   width: 220px;
@@ -194,29 +260,32 @@ svg rect{
 }
 
 .dash-comp-container h6:hover {
-  color: #E3F2FD;
+  color: #d2c1fd;
   cursor: pointer;
 }
 
 .non-nav-page {
   margin-left: 205px;
-  color: #304FFE;
-  font-family: "Quicksand";
+  background-color: #fafafa;
+  height: 100vh;
+  color: #001064;
+  font-family: "Roboto";
 }
 
 .frontend-page-title {
-  background-color: #E3F2FD;
+  background-color: #5f5fc4;
+  color: white;
   padding: 30px;
 }
 
 .backend-page-title {
-  background-color: #8C9EFF;
+  background-color: #5f5fc4;
   color: white;
   padding: 30px;
 }
 
 .frontcompliance-page-title {
-  background-color: #2962FF;
+  background-color: #5f5fc4;
   color: white;
   padding: 30px;
 }
@@ -228,8 +297,8 @@ svg rect{
 .admin-page {
   padding-top: 20px;
   padding-bottom: 25px;
-  font-family: 'Quicksand';
-  color: #304FFE;;
+  font-family: 'Roboto';
+  color: #283593;
 }
 
 .title-padding {
@@ -244,20 +313,21 @@ svg rect{
 
 .code-model {
   padding: 20px;
-  background-color: #E3F2FD;
-  color: #304FFE;
+  background-color: #d2c1fd;
+  color: #283593;
   text-align: center;
 }
 
 .code-container {
-  color: #304FFE;
-  background-color: #E3F2FD;
+  color: #283593;
+  background-color: #d2c1fd;
   width: 100%;
   padding: 20px;
+  box-shadow: -5px 10px #7e71a4;
 }
 
 .tag {
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
   border-radius: 5px;
 }
@@ -272,18 +342,18 @@ svg rect{
   font-size: 20px;
   border-style: none;
   border-bottom-style: solid;
-  border-bottom-color: #304FFE;
-  color: #304FFE;
+  border-bottom-color: #283593;
+  color: #283593;
   outline: none;
   height: 100px;
 }
 
 .text-area-input::placeholder {
-  color: #304FFE;
+  color: #283593;
 }
 
 .render-card {
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
   padding: 30px;
   border-radius: 10px;
@@ -294,12 +364,13 @@ svg rect{
 }
 
 .render-card:hover{
-  background-color: #2962FF;
+  background-color: #7246fe;
 }
 
 .project-homepage-title {
-  padding: 30px;
-  color: #304FFE;
+  background-color: #5f5fc4;
+  color: white;
+  padding: 50px;
 }
 
 .projects-homepage {
@@ -309,9 +380,9 @@ svg rect{
 .project-navigation {
   position: fixed;
   padding: 20px;
-  background-color: #E3F2FD;
-  color: #304FFE;
-  font-family: "Quicksand";
+  background-color: #283593;
+  color: white;
+  font-family: "Roboto";
   height: 100vh;
   width: 200px;
 }
@@ -321,9 +392,12 @@ svg rect{
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
-  font-family: "Quicksand";
+  font-family: "Roboto";
   color: white;
-  background-color: #2962FF;
+  background-color: #001064;
+  position: fixed;
+  width: 100%;
+  z-index: 100;
 }
 
 .nav-comp-container {
@@ -353,33 +427,35 @@ svg rect{
 }
 
 .project-note {
-  background-color: #304FFE;
+  background-color: black;
   color: white;
   padding: 50px;
   width: 300px;
   height: 200px;
+  box-shadow: -5px 10px #001064;
 }
 
 .project-note:hover {
-  background-color: #536DFE;
+  background-color: #5c6bc0;
 }
 
 .user-search-container {
-  background-color: #536DFE;
+  background-color: #4b1afc;
   color: white;
   padding: 7px;
   width: 100%;
 }
 
 .button-white {
-  background-color: #E3F2FD;
-  color: #304FFE;
+  background-color: #5f5fc4;
+  color: white;
   border-radius: 5px;
   border-style: none;
 }
 
 .button-white:hover {
-  background-color: #E3F2FD;
+  background-color: #c5cae9;
+  color: #001064;
 }
 
 .pointer {
@@ -399,13 +475,13 @@ svg rect{
   padding-right: 10px;
   border-radius: 25px;
   border-style: solid;
-  border-color: #304FFE;
-  color: #304FFE;
+  border-color: #283593;
+  color: #283593;
   background-color: transparent;
 }
 
 .input-comment::placeholder {
-  color: #304FFE;
+  color: #283593;
 }
 
 .columncard {
@@ -435,13 +511,13 @@ svg rect{
 
 .project-card {
   padding: 40px;
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
   border-radius: 10px;
 }
 
 .project-card:hover {
-  background-color: #8C9EFF;
+  background-color: #5f5fc4;
 }
 
 .nav-card {
@@ -458,7 +534,7 @@ svg rect{
 }
 
 .comment {
-  background-color: #3D5AFE;
+  background-color: #5f5fc4;
   color: white;
   border-radius: 8px;
 }
@@ -468,17 +544,22 @@ svg rect{
 }
 
 .users-container {
-  padding: 50px;
-  background-color: #3D5AFE;
-  color: white;
+  padding: 80px;
+  background-color: white;
+  color: #001064;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #001064;
 }
 
 .users-container:hover {
-  background-color: #3D5AFE;
+  background-color: #001064;
+  color: white;
 }
 
+
 .pending-project {
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
   padding: 50px;
   border-radius: 20px;
@@ -493,9 +574,10 @@ svg rect{
 }
 
 .service-box {
-  background-color: #2962FF;
+  background-color: #001064;
   color: white;
   padding: 20px;
+  box-shadow: -5px 10px #7e71a4;
 }
 
 .button-major-padding {
@@ -511,12 +593,31 @@ svg rect{
   padding: 50px;
   width: 300px;
   height: 200px;
-  border-radius: 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  color: white;
+  box-shadow: -5px 10px #5f5fc4;
+}
+
+.model-edit-container {
+  padding: 30px;
+  background-color: #d2c1fd;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: -5px 10px #5c6bc0;
+}
+
+.color-white {
+  color: white;
 }
 
 .table {
-  background-color: #304FFE;
+  background-color: #283593;
   color: white;
+}
+
+.table:hover {
+  background-color: #001064;
 }
 
 .data-nav-bar {
@@ -524,17 +625,17 @@ svg rect{
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
-  background-color: #E3F2FD;
-  color: #2962FF;
-  font-family: "Quicksand";
+  background-color: #283593;
+  color: white;
+  font-family: "Roboto";
   position: fixed;
   width: 100%;
 }
 
 .data-page {
   padding: 20px;
-  font-family: "Quicksand";
-  color: #2962FF;
+  font-family: "Roboto";
+  color: #283593;
   margin-left: 100px;
 }
 
@@ -543,7 +644,7 @@ svg rect{
 }
 
 .table-data-headers {
-  background-color: #3D5AFE;
+  background-color: #001064;
   color: white;
 }
 
@@ -557,7 +658,7 @@ svg rect{
   padding-right: 40px;
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  border-bottom-color: #E3F2FD;
+  border-bottom-color: #d2c1fd;
 }
 
 
@@ -569,17 +670,17 @@ svg rect{
 .data-nav {
   position: fixed;
   height: 100vh;
-  background-color: #2962FF;
+  background-color: #5c6bc0;
   color: white;
-  font-family: "Quicksand";
+  font-family: "Roboto";
 }
 
 .data-whole-page {
-  padding-top: 50px;
+  padding-top: 52px;
 }
 
 .table-row:hover {
-  background-color: #E3F2FD;
+  background-color: #d2c1fd;
 }
 
 .comp-container {
@@ -593,10 +694,96 @@ svg rect{
   border-style: none;
 }
 
+.project {
+  padding-top: 55px;
+}
+
 .project-auth {
   padding: 15px;
 }
 
 .spacing-container {
   padding: 10px;
+}
+
+.loading-container-component {
+  color: #283593;
+}
+
+.api-page-constant {
+  background-color: #5c6bc0;
+  color: white;
+  padding: 20px;
+}
+
+.card-project-api {
+  background-color: white;
+  color: #001064;
+  padding: 50px;
+  border-radius: 15px;
+}
+
+.padding-api-page-constant {
+  padding: 40px;
+}
+
+.card-project-api:hover {
+  background-color: #c5cae9;
+}
+
+.modal-comp {
+  background-color: #fafafa;
+  color: #001064;
+  padding: 20px;
+}
+
+.empty-model-container {
+  padding: 60px;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  background-color: #5c6bc0;
+  color: white;
+  box-shadow: -5px 10px #7e71a4;
+}
+
+.empty-padding {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.empty-notes-container {
+  padding: 60px;
+  box-shadow: -5px 10px #5c6bc0;
+  background-color: #001064;
+  color: white;
+  border-radius: 10px;
+}
+
+.empty-auth-container {
+  padding: 60px;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  background-color: white;
+  color: #001064;
+  border-radius: 10px;
+}
+
+.empty-table-container {
+  padding: 60px;
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+  background-color: white;
+  color: #001064;
+  border-radius: 10px;
+}
+
+.background-front-end-nav {
+  background-color: #5f5fc4;
+  color: white;
+  height: 338px;
+  padding: 20px;
+  box-shadow: -5px 10px #001064;
+}
+
+.comp-spacing {
+  padding-top: 10px;
+  padding-bottom: 10px;
+
 }

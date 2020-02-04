@@ -28,7 +28,7 @@ const Search = ({
         setMap({
             map: variable
         })
-        if (longRender === false ||longRender === null) {
+        if (longRender === false ||longRender !== null) {
           setLongRender({
             longRender: "row"
           })
@@ -72,7 +72,7 @@ const Search = ({
             }}>
              <div className="row">
                <div className="col-md-6">
-               <h5>{MinimizeText(currentrender[output[0]] , 14)}</h5>
+               <h5>{MinimizeText(currentrender[output[0]] , 25)}</h5>
                </div>
                <div className="col-md-6">
                <h6>{MinimizeText(currentrender[output[1]] , 30)}</h6>
@@ -176,22 +176,6 @@ const Search = ({
             </div>
           )
         }
-
-/*
-        function ShowBtnInRender({showBtn}) {
-            if (showBtn === true) {
-                return (
-                    <div>
-                      <div className="button-padding">
-                        <button className={BTNStyle}>{MinimizeText(BTNTitle, 12)}</button>
-                      </div>
-                    </div>
-                )
-            } else {
-                return null
-            }
-        }
-*/
     }
 
     return (

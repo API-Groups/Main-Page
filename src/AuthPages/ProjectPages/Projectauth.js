@@ -27,7 +27,6 @@ const Projectauth = ({projectauth , projectapi}) => {
         .then((res) => {
             return res.json()
         }).then((body) => {
-            console.log(body);
             setData({
                 data: body
             })
@@ -449,8 +448,17 @@ const Projectauth = ({projectauth , projectapi}) => {
         if (users.users.length === 0) {
             return (
                 <div>
-                 <div className="text-padding">
-                  <h2 className="text-center">THERE ARE NO USERS CURRENTLY</h2>
+                 <div className="empty-padding">
+                  <div className="empty-auth-container">
+                      <h2>There are no users for this project</h2>
+                      <div className="button-padding">
+                       <button className="button-purple" onClick={() => {
+                           setAddUsersModal({
+                               addUserModal: true
+                           })
+                       }}>Add a User</button>
+                      </div>
+                  </div>
                  </div>
                 </div>
             )
@@ -493,6 +501,58 @@ const Projectauth = ({projectauth , projectapi}) => {
         }
     }
 
+    const AuthMethodShow = () => {
+        const [authMethodValue, setAuthMethodValue] = useState({
+            authMethodValue: "Email and Password"
+        })
+        if (data.data.authmethod === "") {
+            return (
+                <div>
+                  <div className="input-container">
+                    <label>Please pick a type authentication method</label>
+                    <select className="input-bar" onChange={(e) => {
+                        setAuthMethodValue({
+                            authMethodValue: e.target.value
+                        })
+                    }}>
+                      <option value="Email and Password">Email and Password</option>
+                      <option value="Username and Password">Username and Password</option>
+                    </select>
+                  </div>
+                  <div className="button-padding">
+                    <button className="button-purple" onClick={() => {
+                        const data = {authmethod: authMethodValue.authMethodValue}
+                        fetch('/projectauth/setauthmethod/' + projectapi, {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        }).then((res) => {
+                            return res.json()
+                        }).then((body) => {
+                            setData({
+                                data: body
+                            })
+                        }).catch((error) => {
+                            console.log(error)
+                        })
+                    }}>Set Authentication Method</button>
+                  </div>
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                 <div className="text-padding">
+                   <h6>{"Authentication: " + data.data.authmethod}</h6>
+                 </div>
+                </div>
+            )
+        }
+    }
+
   if (projectauth === true) {
       return (
           <div>
@@ -507,9 +567,7 @@ const Projectauth = ({projectauth , projectapi}) => {
                 }} >ADD USER</button>
                </div>
                <h3>PROJECT AUTHENTICATION</h3>
-               <div className="text-padding">
-                <h6>{"Authentication :" + data.data.authmethod}</h6>
-               </div>
+               <AuthMethodShow/>
                <TableUsers/>
               </div>
              </div>

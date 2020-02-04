@@ -18,10 +18,13 @@ const Login = () => {
     return <Redirect to="/Dash" />
   }
 
+  console.log(username.username);
+  console.log(password.password)
  
     return (
         <div>
          <Navigation/>
+         <div className="login-page">
          <div className="page">
           <div className="container">
             <h1>LOGIN</h1>
@@ -52,6 +55,7 @@ const Login = () => {
               })
             }}>LOGIN</button>
           </div>
+         </div>
          </div>
         </div>
     )

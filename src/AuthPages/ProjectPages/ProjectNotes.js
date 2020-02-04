@@ -47,6 +47,9 @@ const ProjectNotes = ({projectNotes, api}) => {
         const [codeEditor, setCodeEditor] = useState({
             codeEditor: false
         })
+        const [editCodes, setEditCodes] = useState({
+            editCodes: false
+        })
         useEffect(() => {
          setCurrentComments({
              currentcomments: item.comments
@@ -70,10 +73,42 @@ const ProjectNotes = ({projectNotes, api}) => {
         }
 
         const CodeEditorInput = ({codeEditorInput}) => {
+            const [code, setCode] = useState({
+                code: ''
+            })
             if (codeEditorInput === true) {
                 return (
-                    <div className="code-container">
-                     <textarea className="code-editor" />
+                    <div>
+                     <div className="button-padding">
+                      <button className="button-black" onClick={() => {
+                          const data = {
+                              model: code.code,
+                              author: JPIAuth.currentUser.username
+                          }
+                          fetch('/api/project/addedits/' + api + '/' + item.noteid, {
+                              method: 'POST',
+                              headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify(data)
+                          }).then((res) => {
+                              return res.json();
+                          }).then((body) => {
+                             console.log(body);
+                          }).catch((error) => {
+                              console.log(error);
+                          })
+
+                      }}>SAVE EDITS</button>
+                     </div>
+                     <div className="code-container">
+                       <textarea className="code-editor" onChange={(e) => {
+                           setCode({
+                               code: e.target.value
+                           })
+                       }} />
+                     </div>
                     </div>
                 )
             } else {
@@ -97,6 +132,18 @@ const ProjectNotes = ({projectNotes, api}) => {
             }
         }
 
+        const EditCodes = ({editcodes}) => {
+            if (editcodes === true) {
+                return (
+                    <div>
+                      <h4 className="text-center">CURRENTLY THERE ARE NO EDITS</h4>
+                    </div>
+                )
+            } else {
+                return null;
+            }
+        }
+
         if (currentnote === true) {
             return (
                 <div>
@@ -110,16 +157,40 @@ const ProjectNotes = ({projectNotes, api}) => {
                           })
                       }}>&times;</span>
                       <div className="button-padding">
-                      <button className="button-purple" onClick={() =>{
+                      <div className="float-left">
+                       <div className="button-spacing">
+                       <button className="button-purple" onClick={() =>{
                           setOGCodeContainer({
                               originalCodeContainer: false
                           })
                           setCodeEditor({
                               codeEditor: true
                           })
+                          setEditCodes({
+                            editCodes: false
+                        })
                       }}>
                        EDIT CODE
                       </button>
+                       </div>
+                      </div>
+                      <div className="float-left">
+                       <div className="button-spacing">
+                       <button className="button-black " onClick={() =>{
+                          setOGCodeContainer({
+                              originalCodeContainer: false
+                          })
+                          setCodeEditor({
+                              codeEditor: false
+                          })
+                          setEditCodes({
+                              editCodes: true
+                          })
+                      }}>
+                       EDITS
+                      </button>
+                       </div>
+                      </div>
                       <button className="button-white" onClick={() =>{
                           setOGCodeContainer({
                               originalCodeContainer: true
@@ -127,6 +198,9 @@ const ProjectNotes = ({projectNotes, api}) => {
                           setCodeEditor({
                               codeEditor: false
                           })
+                          setEditCodes({
+                            editCodes: false
+                        })
                       }}>
                        ORIGINAL CODE
                       </button>
@@ -135,6 +209,7 @@ const ProjectNotes = ({projectNotes, api}) => {
                        <div className="col-md-8">
                         <CodeContainer codecontainer={originalCodeContainer.originalCodeContainer}/>
                         <CodeEditorInput codeEditorInput={codeEditor.codeEditor}/>
+                        <EditCodes editcodes={editCodes.editCodes}/> 
                        </div>
                        <div className="col-md-4">
                         <h6>{item.note}</h6>
@@ -181,6 +256,24 @@ const ProjectNotes = ({projectNotes, api}) => {
     }
 
     const NoteResponse = () => {
+       if (noteres.noteres.length === 0) {
+         return (
+             <div>
+              <div className="empty-padding">
+                <div className="empty-notes-container">
+                 <h2>There are no Notes in this project</h2>
+                 <div className="button-padding">
+                 <button className="button-all-white" onClick={() => {
+                     setNoteModal({
+                         notemodal: true
+                     })
+                 }}>CREATE NOTE</button>
+                </div>
+                </div>
+              </div>
+             </div>
+         )
+       } else {
         return (
             <div>
                 <div className="row" >
@@ -211,6 +304,7 @@ const ProjectNotes = ({projectNotes, api}) => {
                 </div>
             </div>
         )
+       }
     }
 
     const ModalNote = ({modalnote}) => {

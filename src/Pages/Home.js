@@ -1,9 +1,11 @@
 import React from 'react';
 import Navigation from './Subcomponents/Navigation';
+import NonAuthFooter from './Subcomponents/Footer';
 const Home = () => {
     return (
         <div>
          <Navigation/>
+         <div className="home-page">
          <div className="major-padding-page">
           <div className="container">
             <h1>JPI</h1>
@@ -12,6 +14,8 @@ const Home = () => {
             </div>
           </div>
          </div>
+         </div>
+         <NonAuthFooter/>
         </div>
     )
 }
