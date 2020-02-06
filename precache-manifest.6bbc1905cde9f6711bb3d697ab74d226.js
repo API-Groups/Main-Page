@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f47978fa41427e22e5e51455f668afaf",
+    "revision": "0e3726fddc0425a6130a955e9477f1c0",
     "url": "/JPI-web-page/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/JPI-web-page/static/css/2.0624914a.chunk.css"
   },
   {
-    "revision": "402d24be1ae6697e1652",
+    "revision": "0fd56ed09233d0f8369c",
     "url": "/JPI-web-page/static/css/main.1d4dec0a.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/JPI-web-page/static/js/2.c79c11af.chunk.js"
   },
   {
-    "revision": "402d24be1ae6697e1652",
-    "url": "/JPI-web-page/static/js/main.44d1c1cb.chunk.js"
+    "revision": "0fd56ed09233d0f8369c",
+    "url": "/JPI-web-page/static/js/main.a29d5fcb.chunk.js"
   },
   {
     "revision": "569f72e3ea4350dc2380",
