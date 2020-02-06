@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/JPI-web-page/static/css/main.1d4dec0a.chunk.css",
-    "main.js": "/JPI-web-page/static/js/main.4190577e.chunk.js",
-    "main.js.map": "/JPI-web-page/static/js/main.4190577e.chunk.js.map",
+    "main.js": "/JPI-web-page/static/js/main.44d1c1cb.chunk.js",
+    "main.js.map": "/JPI-web-page/static/js/main.44d1c1cb.chunk.js.map",
     "runtime-main.js": "/JPI-web-page/static/js/runtime-main.bfd1352a.js",
     "runtime-main.js.map": "/JPI-web-page/static/js/runtime-main.bfd1352a.js.map",
     "static/css/2.0624914a.chunk.css": "/JPI-web-page/static/css/2.0624914a.chunk.css",
     "static/js/2.c79c11af.chunk.js": "/JPI-web-page/static/js/2.c79c11af.chunk.js",
     "static/js/2.c79c11af.chunk.js.map": "/JPI-web-page/static/js/2.c79c11af.chunk.js.map",
     "index.html": "/JPI-web-page/index.html",
-    "precache-manifest.56915a3789300ded3d903ac757b9dd2b.js": "/JPI-web-page/precache-manifest.56915a3789300ded3d903ac757b9dd2b.js",
+    "precache-manifest.e1bcb157e9dedd584070553aed9c64ea.js": "/JPI-web-page/precache-manifest.e1bcb157e9dedd584070553aed9c64ea.js",
     "service-worker.js": "/JPI-web-page/service-worker.js",
     "static/css/2.0624914a.chunk.css.map": "/JPI-web-page/static/css/2.0624914a.chunk.css.map",
     "static/css/main.1d4dec0a.chunk.css.map": "/JPI-web-page/static/css/main.1d4dec0a.chunk.css.map"
@@ -19,6 +19,6 @@
     "static/css/2.0624914a.chunk.css",
     "static/js/2.c79c11af.chunk.js",
     "static/css/main.1d4dec0a.chunk.css",
-    "static/js/main.4190577e.chunk.js"
+    "static/js/main.44d1c1cb.chunk.js"
   ]
 }
