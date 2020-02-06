@@ -3,6 +3,7 @@ import Navigation from './Subcomponents/Navigation';
 import LoadingWholePage from '../MiscComps/Wholeloading';
 import { JPIAuth } from '../Authentication/Auth';
 import {Redirect} from 'react-router-dom';
+import axios from 'axios'
 //import JPID from '../Test/testdata';
 
 const Register = (props) => {
@@ -27,6 +28,8 @@ const Register = (props) => {
   const [loggedin, setLoggedIn] = useState({
     loggedin: false
   })
+
+
 
   if (loggedin.loggedin) {
     return <Redirect to="/Dash" />
@@ -89,28 +92,24 @@ const Register = (props) => {
                  password: password.password
                }
 
-               fetch('/api/authentication/createuser', {
-                 method: 'POST',
+               axios.post('https://jpi-backend.herokuapp.com/api/authentication/createuser', data , {
                  headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json'
-                },
-                 body: JSON.stringify(data)
-               }).then((res) => {
-                return res.json();
+                }
                }).then((body) => {
                 console.log(body);
+                console.log(body.data.username);
+                console.log(body.data.password)
 
                 setLoading({
                   loading: true
                 })
-                
-
                 setTimeout(() => {
                   setLoading({
                     loading: false
                   })
-                  JPIAuth.signIn(body.username, body.password)
+                  JPIAuth.signIn(body.data.username, body.data.password)
                   .then(() => {
                     setLoggedIn({
                       loggedin: true

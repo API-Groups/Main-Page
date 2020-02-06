@@ -6,7 +6,7 @@ import ProjectAnalytics from './ProjectAnalytics';
 import Projectauth from './Projectauth';
 import {NavLink} from 'react-router-dom';
 import LoadingBluePage from '../../MiscComps/Wholeloadingblue';
-
+import axios from 'axios';
 const ProjectDetails = (props) => {
     const [apipage, setApiPage] = useState({
         apipage: true
@@ -37,12 +37,11 @@ const ProjectDetails = (props) => {
      if (projectapi !== undefined) {
         if (componentDidMount.current) {
             setTimeout(() => {
-                fetch('/api/project/getprojectcreds/' + projectapi)
-                .then((res) => {
-                    return res.text()
-                }).then((body) => {
+                axios.get('https://jpi-backend.herokuapp.com/api/project/getprojectcreds/' + projectapi)
+                .then((body) => {
+                    console.log(body)
                     setProjectName({
-                        projectName: body
+                        projectName: body.data
                     })
                     setLoadingPage({
                         loadingpage: false

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import axios from 'axios';
 const ProjectUsers = ({projectusers, api}) => {
     const [users, setUsers] = useState({
         users: []
@@ -12,13 +12,11 @@ const ProjectUsers = ({projectusers, api}) => {
     })
     useEffect(() => {
      if (projectusers === true) {
-        fetch('/api/project/getuser/' + api)
-        .then((res) => {
-            return res.json()
-        }).then((body) => {
+        axios.get('https://jpi-backend.herokuapp.com/api/project/getuser/' + api)
+        .then((body) => {
             console.log(body);
             setUsers({
-                users: body
+                users: body.data
             })
         }).catch((error) => {
             console.log(error);

@@ -1,6 +1,7 @@
 import React, {useState , useEffect, useRef} from 'react';
 import Search from '../../Functions/Search';
 import LoadingComponent from '../../Functions/LoadingComp'
+import axios from 'axios';
 
 const ApiPage = ({apipage , api}) => {
     const [projectapi , setProjectApi] = useState({
@@ -44,40 +45,32 @@ const ApiPage = ({apipage , api}) => {
         if (apipage === true) {
             if (componentMounted.current) {
                 setTimeout(() => {
-                fetch('/api/backend/getbackendcomps')
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
+                axios.get('https://jpi-backend.herokuapp.com/api/backend/getbackendcomps')
+                .then((body) => {
                 setBackEnd({
-                    backend: body
+                    backend: body.data
                 })
                 }).catch((error) => {
                     console.log(error)
                 })
-                fetch('/api/project/getfrontendapi/' + api)
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
+                axios.get('https://jpi-backend.herokuapp.com/api/project/getfrontendapi/' + api)
+                .then((body) => {
                     setFrontEndCreds({
-                        frontendcreds: body
+                        frontendcreds: body.data
                     })
                 })
-                fetch('/api/frontend/getcomponents')
-                .then((res) => {
-                    return res.json();
-                }).then((body) => [
+                axios.get('https://jpi-backend.herokuapp.com/api/frontend/getcomponents')
+                .then((body) => [
                     setFrontEnd({
-                        frontend: body
+                        frontend: body.data
                     })
                 ]).catch((error) => {
                     console.log(error)
                 })
-                fetch('/api/frontcompliance/getfrontcompliance')
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
+                axios.get('https://jpi-backend.herokuapp.com/api/frontcompliance/getfrontcompliance')
+                .then((body) => {
                 setFrontCompliance({
-                    frontcompliance: body
+                    frontcompliance: body.data
                 })
                 }).then(() => {
                     setLoading({
@@ -163,15 +156,11 @@ const ApiPage = ({apipage , api}) => {
                                <div className="button-major-padding">
                                 <div className="d-flex justify-content-center">
                                 <button className="button-all-white" onClick={() => {
-                                    fetch('/api/project/getservicecredentials/' + api)
-                                    .then((res) => {
-                                        return res.blob();
-                                    }).then((body) => {
-                                        fetch('/api/project/getservicetitle/' + api)
-                                        .then((res) => {
-                                            return res.text();
-                                        }).then((title) => {
-                                           const blobUrl = URL.createObjectURL(body);
+                                    axios.get('https://jpi-backend.herokuapp.com/api/project/getservicecredentials/' + api)
+                                    .then((body) => {
+                                        axios.get('https://jpi-backend.herokuapp.com/api/project/getservicetitle/' + api)
+                                        .then((title) => {
+                                           const blobUrl = window.URL.createObjectURL(new Blob([body.data] , {type: "application/json"}));
                                            const dl = document.createElement('a');
                                            dl.href = blobUrl;
                                            dl.download = title;

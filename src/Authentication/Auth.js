@@ -1,4 +1,5 @@
-      export const JPIAuth = {
+     import axios from 'axios';
+     export const JPIAuth = {
         aInternal: false,
         currentUserInternal: '',
         aListener: function(val) {},
@@ -24,23 +25,18 @@
               username: username,
               password: password
           }
-          fetch("/api/authentication/authenticateprocess" , {
-              method: 'POST',
+          axios.post("https://jpi-backend.herokuapp.com/api/authentication/authenticateprocess" , data,{
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(data)
-            }).then((res) => {
-              return res.text();
             }).then((body) => {
-              if (body !== "error") {
-                 fetch('/api/authentication/login/' + body)
-                 .then((res) => {
-                   return  res.json();
-                 }).then((response) => {
+              console.log(body)
+              if (body.data !== "error") {
+                 axios.get('https://jpi-backend.herokuapp.com/api/authentication/login/' + body.data)
+                 .then((response) => {
                   this.a = true;
-                  this.currentUser = response;
+                  this.currentUser = response.data;
                  }).catch((error) => {
                    console.log(error);
                  })
@@ -56,8 +52,7 @@
         },
         logout() {
           return new Promise((resolve , reject) => {
-            fetch('/api/authentication/logout/' + this.currentUser.userid , {
-              method: 'PUT',
+            axios.put('https://jpi-backend.herokuapp.com/api/authentication/logout/' + this.currentUser.userid , {
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -72,69 +67,4 @@
             })
           })
         }
-            /*
-            status: false,
-      reader(value) {
-        value = this.status;
-        console.log(value);
-      },
-      checkStatus(callback) {
-        callback = this.reader
-      },
-      get state() {
-        this.reader(this.status)
-        return this.status;
-      },
-      set state(val) {
-        this.status = val;
-        this.reader(val)
-      },
-      signIn(username, password) {
-        new Promise((resolve , reject) => {
-          const data = {
-            username: username,
-            password: password
-        }
-        fetch("/api/authentication/loginuser" , {
-            method: 'POST',
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-          }).then((res) => {
-            return res.json();
-          }).then((body) => {
-            if (body !== "error") {
-               currentAUTH = body
-               resolve(true);
-            } else {
-                reject("error: there was an error in the authentication")
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-        })
-       },
-      Logout() {
-        return new Promise((resolve, reject) => {
-          if (currentAUTH.authenticated === true) {
-           currentAUTH = null;
-          } else {
-            reject("JPI Error: You are already logged out")
-          }
-        })
-      }
-            */
     }
-
-
-  
-
-
-/*
-const JPILogin = (username, password) => {
-         
-  }
-*/

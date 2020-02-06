@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import axios from 'axios';
 const SetComponent = () => {
     const [componentname, setComponentName] = useState({
         componentname: ''
@@ -192,13 +192,11 @@ const SetComponent = () => {
                         console.log(data);
 
                         
-                        fetch('/adminapi/setcomponent' , {
-                            method: 'PUT',
+                        axios.put('https://jpi-backend.herokuapp.com/adminapi/setcomponent', data,{
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             }, 
-                            body: JSON.stringify(data)
                         }).then(() => {
                             console.log('this worked')
                         }).catch((error) => {

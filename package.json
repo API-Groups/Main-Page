@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "downloadjs": "^1.4.7",
     "firebase": "^7.2.3",
@@ -16,7 +17,7 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -36,6 +37,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:8080",
   "homepage": "https://jaffersyed0206.github.io/JPI-web-page/"
 }

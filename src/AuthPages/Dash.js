@@ -3,7 +3,8 @@ import Search from '../Functions/Search'
 import {JPIAuth} from '../Authentication/Auth';
 import LoadingPage from '../Functions/Loadingpage';
 import {NavLink} from 'react-router-dom';
-import LoadingComponent from '../Functions/LoadingComp'
+import LoadingComponent from '../Functions/LoadingComp';
+import axios from 'axios';
 
 const FrontCompliance = ({frontcompliance}) => {
     if (frontcompliance === true) {
@@ -40,12 +41,10 @@ const BackEndPage = ({backendpage}) => {
     useEffect(() => {
       componentDidMount.current = true;
       if (componentDidMount.current) {
-        fetch('/api/backend/getbackendcomps')
-        .then((res) => {
-            return res.json();
-        }).then((body) => {
+        axios.get('https://jpi-backend.herokuapp.com/api/backend/getbackendcomps')
+        .then((body) => {
             setBackendres({
-                backendres: body
+                backendres: body.data
             })
         }).catch((error) => {
             console.log(error);
@@ -167,12 +166,10 @@ const FrontEndPage = ({frontendpage}) => {
     componentDidMount.current = true;
     if (frontendpage === true) {
         if (componentDidMount.current) {
-            fetch('/api/frontend/getcomponents')
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
+            axios.get('https://jpi-backend.herokuapp.com/api/frontend/getcomponents')
+            .then((body) => {
                 setSearchOptions({
-                    searchOptions: body
+                    searchOptions: body.data
                 })
             }).catch((error) => {
                 console.log(error);
@@ -308,12 +305,11 @@ const Projects = ({projectcomponent}) => {
        setTimeout(() => {
         if (componentDidMount.current) {
             if (JPIAuth.currentUser.userid !== undefined) {
-            fetch('/api/dash/getprojects/' + JPIAuth.currentUser.userid)
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
+            axios.get('https://jpi-backend.herokuapp.com/api/dash/getprojects/' + JPIAuth.currentUser.userid)
+            .then((body) => {
+                console.log(body)
                 setProjects({
-                    projects: body
+                    projects: body.data
                 })
                 setLoadingComponent({
                     loadingComponent: false
@@ -325,23 +321,19 @@ const Projects = ({projectcomponent}) => {
                 console.log(error);
             })
 
-              fetch('/api/dash/getpendingrequest/' + JPIAuth.currentUser.userid)
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
+              axios.get('https://jpi-backend.herokuapp.com/api/dash/getpendingrequest/' + JPIAuth.currentUser.userid)
+              .then((body) => {
                     setPendingRes({
-                        pendingprojects: body
+                        pendingprojects: body.data
                     })
                 }).catch((error) => {
                     console.log(error);
                 })
 
-                fetch('/api/dash/getusers')
-                .then((res) => {
-                    return res.json();
-                }).then((body) => {
+                axios.get('https://jpi-backend.herokuapp.com/api/dash/getusers')
+                .then((body) => {
                     setGetUsers({
-                      users: body
+                      users: body.data
                     })
                 }).catch((error) => {
                     console.log(error)
@@ -368,11 +360,9 @@ const Projects = ({projectcomponent}) => {
                           <div className="d-flex justify-content-center">
                           <div className="button-padding">
                             <button className="button-white" onClick={() => {
-                                fetch('/api/dash/connectproject/' + item.projectapi + '/' + JPIAuth.currentUser.userid)
-                                .then((res) => {
-                                    return res.json();
-                                }).then((body) => {
-                                    projects.projects.push(body);
+                                axios.get('https://jpi-backend.herokuapp.com/api/dash/connectproject/' + item.projectapi + '/' + JPIAuth.currentUser.userid)
+                                .then((body) => {
+                                    projects.projects.push(body.data);
                                     setProjects({
                                         projects: projects.projects
                                     })
@@ -493,18 +483,14 @@ const Projects = ({projectcomponent}) => {
                                 requestedusers: requestedusers.requestedusers,
                             }
 
-                            fetch('/api/dash/createproject/' + JPIAuth.currentUser.userid, {
-                                method: 'POST',
+                            axios.post('https://jpi-backend.herokuapp.com/api/dash/createproject/' + JPIAuth.currentUser.userid, data,{
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(data)
-                            }).then((res) => {
-                                return res.json();
                             }).then((body) => {
                                 console.log(body);
-                                projects.projects.push(body);
+                                projects.projects.push(body.data);
                                 setProjects({
                                     projects: projects.projects
                                 })

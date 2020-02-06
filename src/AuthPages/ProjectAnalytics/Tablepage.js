@@ -6,7 +6,7 @@ import TableFunctionality from './Tablepage/TableFunctionality';
 import TableUsuage from './Tablepage/TableUsuage';
 import LoadingWholePageLight from '../../MiscComps/Wholeloadinglightblue';
 import LoadingData from './Analyticcomps/LoadingData';
-
+import axios from 'axios';
 const TablePage = (props) => {
     const [tableresponse, setTableResponse] = useState({
         tableresponse: {}
@@ -40,15 +40,13 @@ const TablePage = (props) => {
      mounted.current = true;
       if (mounted.current) {
             setTimeout(() => {
-            fetch(`/data/gettablepagedata/${props.match.params.projectapi}/${props.match.params.tableapi}`)
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
+            axios.get(`https://jpi-backend.herokuapp.com/data/gettablepagedata/${props.match.params.projectapi}/${props.match.params.tableapi}`)
+            .then((body) => {
                 setTableResponse({
-                    tableresponse: body
+                    tableresponse: body.data
                 })
                 setDataTable({
-                    data: body.tabledata
+                    data: body.data.tabledata
                 })
                 setLoading({
                     loading: false

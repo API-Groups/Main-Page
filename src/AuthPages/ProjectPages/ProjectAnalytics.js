@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import Search from '../../Functions/Search';
 import {NavLink} from 'react-router-dom';
 import LoadingComponent from '../../Functions/LoadingComp'
+import axios from 'axios'
 const ProjectAnalytics = ({projectanalytics, api}) => {
     const [datamodel, setDataModel] = useState({
         datamodel: false
@@ -26,23 +27,19 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
       if (projectanalytics === true) {
         setTimeout(() => {
           if (componentMounted.current) {
-            fetch('/api/project/getprojectusers/' + api)
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
+            axios.get('https://jpi-backend.herokuapp.com/api/project/getprojectusers/' + api)
+            .then((body) => {
                 setProjectUsers({
-                    projectusers: body
+                    projectusers: body.data
                 })
             }).catch((error) => {
                 console.log(error);
             })
       
-            fetch('/projectanalytics/getmodels/' + api)
-            .then((res) => {
-                return res.json();
-            }).then((body) => {
+            axios.get('https://jpi-backend.herokuapp.com/projectanalytics/getmodels/' + api)
+            .then((body) => {
                 setModels({
-                    models: body
+                    models: body.data
                 })
                 setLoading({
                     loading: false
@@ -160,17 +157,13 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
                              datatype: datatype.datatype
                          }
 
-                         fetch('/api/project/createmodel/' + api, {
-                             method: 'POST',
+                         axios.post('https://jpi-backend.herokuapp.com/api/project/createmodel/' + api, data,{
                              headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                              },
-                             body: JSON.stringify(data)
-                         }).then((res) => {
-                             return res.json();
                          }).then((body) => {
-                             models.models.push(body);
+                             models.models.push(body.data);
                              setModels({
                                  models: models.models
                              })
@@ -243,24 +236,20 @@ const ProjectAnalytics = ({projectanalytics, api}) => {
                          <div className="button-padding">
                           <button className="button-purple" onClick={() => {
                               const data = {title: itemName.itemname, description: itemDescription.itemDescription}
-                              fetch('/projectanalytics/setModelName/' + api + '/' + item.modelapi , {
-                                method: 'POST',
+                              axios.post('https://jpi-backend.herokuapp.com/projectanalytics/setModelName/' + api + '/' + item.modelapi , data,{
                                 headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify(data)
-                              }).then((res) => {
-                                 return res.json();
                               }).then((body) => {
                                   let currentIndex = null
                                   for (const item of models.models) {
-                                      if (item.modelapi === body.modelapi) {
+                                      if (item.modelapi === body.data.modelapi) {
                                           currentIndex = models.models.indexOf(item);
                                       }
                                   }
                                   if (~currentIndex) {
-                                      models.models[currentIndex] = body
+                                      models.models[currentIndex] = body.data
                                   }
 
                                   setModels({

@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
 
 .footer-component {
   background-color: #283593;
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   padding: 40px;
   height: 100vh;
 }
@@ -21,7 +21,7 @@
   color: white;
   padding-top: 10px;
   padding-bottom: 10px;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   background-color: #5f5fc4;
   position: fixed;
   width: 100%;
@@ -31,7 +31,7 @@
 .major-padding-page {
   padding-top: 250px;
   padding-bottom: 220px;
-  font-family: "Roboto";
+  font-family: "Montserrat";
 }
 
 .modal-page {
@@ -45,7 +45,7 @@
   background-color: rgb(0,0,0); 
   background-color: rgba(0,0,0,0.4); 
   color: #432c5b;
-  font-family: "Roboto";
+  font-family: "Montserrat";
 }
 
 .modal-page-purple {
@@ -58,7 +58,7 @@
   overflow: auto; 
   background-color:#7e71a4; 
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   z-index: 100;
 }
 
@@ -72,7 +72,7 @@
   overflow: auto; 
   background-color:#6b5895; 
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   z-index: 99;
 }
 
@@ -88,7 +88,7 @@
   overflow: auto; 
   background-color:#4b1afc; 
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   z-index: 99;
 }
 
@@ -102,7 +102,7 @@
   overflow: auto; 
   background-color:white; 
   color: #283593;
-  font-family: "Roboto";
+  font-family: "Montserrat";
 }
 
 .modal-box {
@@ -137,7 +137,7 @@
 .page {
   padding-top: 100px;
   padding-bottom: 20px;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   color: #283593;
 }
 
@@ -233,7 +233,7 @@ svg rect{
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
-  font-family: 'Roboto';
+  font-family: 'Montserrat';
   background-color: #5c6bc0;
   color: white;
   position: fixed;
@@ -248,7 +248,7 @@ svg rect{
   position: fixed;
   background-color: #001064;
   color: white;
-  font-family: 'Roboto';
+  font-family: 'Montserrat';
   height: 100vh;
   padding-top: 20px;
   width: 220px;
@@ -269,7 +269,7 @@ svg rect{
   background-color: #fafafa;
   height: 100vh;
   color: #001064;
-  font-family: "Roboto";
+  font-family: "Montserrat";
 }
 
 .frontend-page-title {
@@ -297,7 +297,7 @@ svg rect{
 .admin-page {
   padding-top: 20px;
   padding-bottom: 25px;
-  font-family: 'Roboto';
+  font-family: 'Montserrat';
   color: #283593;
 }
 
@@ -382,7 +382,7 @@ svg rect{
   padding: 20px;
   background-color: #283593;
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   height: 100vh;
   width: 200px;
 }
@@ -392,7 +392,7 @@ svg rect{
   padding-bottom: 10px;
   padding-right: 30px;
   padding-left: 30px;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   color: white;
   background-color: #001064;
   position: fixed;
@@ -627,14 +627,14 @@ svg rect{
   padding-left: 30px;
   background-color: #283593;
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   position: fixed;
   width: 100%;
 }
 
 .data-page {
   padding: 20px;
-  font-family: "Roboto";
+  font-family: "Montserrat";
   color: #283593;
   margin-left: 100px;
 }
@@ -672,7 +672,7 @@ svg rect{
   height: 100vh;
   background-color: #5c6bc0;
   color: white;
-  font-family: "Roboto";
+  font-family: "Montserrat";
 }
 
 .data-whole-page {

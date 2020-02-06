@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-
+import axios from 'axios';
 const TableData = ({tabledata, data, array, projectapi, tableapi }) => {
     const [currentItem, setCurrentItem] = useState({
         currentItem: {}
@@ -73,19 +73,15 @@ const TableData = ({tabledata, data, array, projectapi, tableapi }) => {
                      </div>
                      <div className="float-right">
                        <button className="button-red" onClick={() => {
-                           fetch('/analytics/table/deletetableitem/' + projectapi + '/' + tableapi, {
-                               method: 'POST',
+                           axios.post('https://jpi-backend.herokuapp.com/analytics/table/deletetableitem/' + projectapi + '/' + tableapi, item,{
                                headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                                },
-                               body: JSON.stringify(item)
-                          }).then((res) => {
-                            return res.json();
                           }).then((body) => {
                              console.log(body);
                              setDataTable({
-                                 data: body
+                                 data: body.data
                              })
                           }).catch((error) => {
                                console.log(error)
@@ -93,24 +89,20 @@ const TableData = ({tabledata, data, array, projectapi, tableapi }) => {
                        }}>DELETE TABLE ITEM</button>
                      </div>
                      <button className="button-purple" onClick={() => {                             
-                         fetch('/analytics/table/editTableData/' + projectapi + '/' + tableapi + '/' + item.reponseid, {
-                             method: 'POST',
+                         axios.post('https://jpi-backend.herokuapp.com/analytics/table/editTableData/' + projectapi + '/' + tableapi + '/' + item.reponseid, itemedits,{
                              headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                              },
-                             body: JSON.stringify(itemedits)
-                         }).then((res) => {
-                            return res.json();
                          }).then((body) => {
                              let checker = null;
                              for (const index of datatable.data) {
-                                 if (index.reponseid === body.reponseid) {
+                                 if (index.reponseid === body.data.reponseid) {
                                     checker = datatable.data.indexOf(index);
                                  }
                              }
                              if (~checker) {
-                                 datatable.data[checker] = body
+                                 datatable.data[checker] = body.data
                              }
 
                              setDataTable({
@@ -166,18 +158,14 @@ const TableData = ({tabledata, data, array, projectapi, tableapi }) => {
                       }
                       <div className="button-padding">
                        <button className="button-purple" onClick={() => {
-                           fetch('/analytics/table/addentry/' + projectapi + '/' + tableapi , {
-                               method: 'POST',
+                           axios.post('https://jpi-backend.herokuapp.com/analytics/table/addentry/' + projectapi + '/' + tableapi , items,{
                                headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                                },
-                               body: JSON.stringify(items)
-                           }).then((res) => {
-                               return res.json();
                            }).then((body) => {
                               console.log(body)
-                              datatable.data.push(body);
+                              datatable.data.push(body.data);
                               setDataTable({
                                   data: datatable.data
                               })
@@ -284,17 +272,13 @@ const TableData = ({tabledata, data, array, projectapi, tableapi }) => {
                       <div className="button-padding">
                         <button className="button-purple" onClick={() => {
                             const data = {labels: addedLabels.addedLabels}
-                            fetch('/analytics/table/setcredlabels/' + projectapi + '/' + tableapi, {
-                                method: 'POST',
+                            axios.post('https://jpi-backend.herokuapp.com/analytics/table/setcredlabels/' + projectapi + '/' + tableapi, data,{
                                 headers:{ 
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json' 
                                 },
-                                body: JSON.stringify(data)
-                            }).then((res) => {
-                                return res.json();
                             }).then((body) => {
-                                array = body;
+                                array = body.data;
                                 setCredentialModal({
                                     credentialModal: false
                                 })

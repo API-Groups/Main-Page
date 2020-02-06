@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import generateId from '../../Functions/Miscfuncs';
-
+import axios from 'axios';
 const Projectauth = ({projectauth , projectapi}) => {
     const [addUserModal, setAddUsersModal] = useState({
         addUserModal: false
@@ -23,20 +23,19 @@ const Projectauth = ({projectauth , projectapi}) => {
     
     useEffect(() => {
      setTimeout(() => {
-        fetch('/projectauth/getprojectauthcreds/' + projectapi)
-        .then((res) => {
-            return res.json()
-        }).then((body) => {
+        console.log(projectapi)
+        axios.get('https://jpi-backend.herokuapp.com/projectauth/getprojectauthcreds/' + projectapi)
+        .then((body) => {
             setData({
-                data: body
+                data: body.data
             })
             setTrackingData({
-                trackingData: body.trackinglabels
+                trackingData: body.data.trackinglabels
             })
             const userall = [];
-            for (let i = 0; i < body.users.length; i++) {
-                body.users[i].response["userid"] = body.users[i].useruid
-                userall.push(body.users[i].response)
+            for (let i = 0; i < body.data.users.length; i++) {
+                body.data.users[i].response["userid"] = body.data.users[i].useruid
+                userall.push(body.data.users[i].response)
             }
             setUsers({
                 users: userall
@@ -215,25 +214,21 @@ const Projectauth = ({projectauth , projectapi}) => {
                              visuals: visuals
                          }
 
-                         fetch('/projectauth/edituserinproject/' + projectapi + '/' + item.userid, {
-                             method: 'POST',
+                         axios.post('https://jpi-backend.herokuapp.com/projectauth/edituserinproject/' + projectapi + '/' + item.userid, data,{
                              headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                              },
-                             body: JSON.stringify(data)
-                         }).then((res) => {
-                             return res.json();
                          }).then((body) => {
-                             body.response["userid"] = body.useruid;
+                             body.data.response["userid"] = body.data.useruid;
                              let checker = null;
                              for (const item of users.users) {
-                                 if (item.userid === body.useruid) {
+                                 if (item.userid === body.data.useruid) {
                                     checker = users.users.indexOf(item)
                                  }
                              }
                              if (~checker) {
-                                 users.users[checker] = body.response
+                                 users.users[checker] = body.data.response
                              }
 
                              setUsers({
@@ -410,18 +405,15 @@ const Projectauth = ({projectauth , projectapi}) => {
                             authmethod: authmethod.authmethod
                             }
 
-                            fetch('/projectauth/addusertoproject/' + projectapi, {
-                                method: 'POST',
+                            axios.post('https://jpi-backend.herokuapp.com/projectauth/addusertoproject/' + projectapi, data,{
                                 headers: {
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json'
                                 }, 
-                                body: JSON.stringify(data)
-                            }).then((res) => {
-                                return res.json();
                             }).then((body) => {
-                                body.response["userid"] = body.useruid;
-                                users.users.push(body.response);
+                                console.log(body)
+                                body.data.response["userid"] = body.data.useruid;
+                                users.users.push(body.data.response);
                                 setUsers({
                                     users: users.users
                                 })
@@ -522,18 +514,14 @@ const Projectauth = ({projectauth , projectapi}) => {
                   <div className="button-padding">
                     <button className="button-purple" onClick={() => {
                         const data = {authmethod: authMethodValue.authMethodValue}
-                        fetch('/projectauth/setauthmethod/' + projectapi, {
-                            method: 'POST',
+                        axios.post('https://jpi-backend.herokuapp.com/projectauth/setauthmethod/' + projectapi, data,{
                             headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify(data)
-                        }).then((res) => {
-                            return res.json()
                         }).then((body) => {
                             setData({
-                                data: body
+                                data: body.data
                             })
                         }).catch((error) => {
                             console.log(error)

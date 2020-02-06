@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import MinimizeText from '../../Functions/MinimizeText';
 import { JPIAuth } from '../../Authentication/Auth';
-
+import axios from 'axios';
 const ProjectNotes = ({projectNotes, api}) => {
     const [notemodal, setNoteModal] = useState({
         notemodal: false
@@ -22,13 +22,11 @@ const ProjectNotes = ({projectNotes, api}) => {
      componentMounted.current = true;
      if (componentMounted.current) {
          if (projectNotes === true) {
-             fetch('/api/project/getprojectnotes/' + api)
-             .then((res) => {
-                 return res.json();
-             }).then((body) => {
+             axios.get('https://jpi-backend.herokuapp.com/api/project/getprojectnotes/' + api)
+             .then((body) => {
                  console.log(body);
                  setNoteResponse({
-                     noteres: body
+                     noteres: body.data
                  })
              }).catch((error) => {
                  console.log(error);
@@ -85,15 +83,11 @@ const ProjectNotes = ({projectNotes, api}) => {
                               model: code.code,
                               author: JPIAuth.currentUser.username
                           }
-                          fetch('/api/project/addedits/' + api + '/' + item.noteid, {
-                              method: 'POST',
+                          axios.post('https://jpi-backend.herokuapp.com/api/project/addedits/' + api + '/' + item.noteid, data ,{
                               headers: {
                                 'Accept': 'application/json',
                                 'Content-Type': 'application/json'
-                              },
-                              body: JSON.stringify(data)
-                          }).then((res) => {
-                              return res.json();
+                              }
                           }).then((body) => {
                              console.log(body);
                           }).catch((error) => {
@@ -221,17 +215,13 @@ const ProjectNotes = ({projectNotes, api}) => {
                                     message: e.target.value
                                 }
 
-                                fetch('/api/project/commentonnotes/' + api + '/' + item.noteid, {
-                                    method: 'POST',
+                                axios.post('https://jpi-backend.herokuapp.com/api/project/commentonnotes/' + api + '/' + item.noteid, data ,{
                                     headers: {
                                         'Accept': 'application/json',
                                         'Content-Type': 'application/json'
                                     }, 
-                                    body: JSON.stringify(data)
-                                }).then((res) => {
-                                    return res.json()
                                 }).then((body) => {
-                                    currentcomments.currentcomments.push(body);
+                                    currentcomments.currentcomments.push(body.data);
                                     setCurrentComments({
                                         currentcomments: currentcomments.currentcomments
                                     })
@@ -355,17 +345,13 @@ const ProjectNotes = ({projectNotes, api}) => {
                                     model: notecode.notecode
                                 }
 
-                                fetch('/api/project/createnote/' + api, {
-                                    method: 'POST',
+                                axios.post('https://jpi-backend.herokuapp.com/api/project/createnote/' + api, data,{
                                     headers: {
                                         'Accept': 'application/json',
                                         'Content-Type': 'application/json'
                                     },
-                                    body: JSON.stringify(data)
-                                }).then((res) => {
-                                    return res.json();
                                 }).then((body) => {
-                                    noteres.noteres.push(body);
+                                    noteres.noteres.push(body.data);
                                     setNoteResponse({
                                         noteres: noteres.noteres
                                     })
